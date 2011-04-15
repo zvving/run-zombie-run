@@ -4,7 +4,7 @@ var Role = Class.extend({
         this.x	= 100;
 		this.y	= 200;
     },
-    getX: function() {
-        return this.x;
+    eventLoop: function() {
+        console.log("=== z:" + z.x + "|" + z.y + "|" + z.id);
     }
 });
