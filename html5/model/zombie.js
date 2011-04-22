@@ -30,6 +30,8 @@ var Zombie = Role.extend({
 		}
 		this.centerPoint.x = tmp_zombie_nx / this.neighborList.length;
 		this.centerPoint.y = tmp_zombie_ny / this.neighborList.length;
+		
+		
 		//log.log(tmp_zombie_nx);
 		//for ( i = 0; i<this.neighborList.length; i++ ) {
 			//tmp_zombie_nx += this.neighborList[i].x;
@@ -42,15 +44,15 @@ var Zombie = Role.extend({
 		
 		cx.beginPath();
 		cx.fillStyle = "hsla(0, 50%, 50%, 0.03)";
-		cx.moveTo(this.x, this.y);
-		cx.arc(this.x, this.y, this.radius + EYESHOT_RANGE, this.dir + EYESHOT_ANGLE, this.dir - EYESHOT_ANGLE, true );
+		cx.moveTo(this.x-this.radius, this.y-this.radius);
+		cx.arc(this.x-this.radius, this.y-this.radius, this.radius + EYESHOT_RANGE, this.dir + EYESHOT_ANGLE, this.dir - EYESHOT_ANGLE, true );
 		cx.fill();
 		cx.closePath();
 		
 		cx.beginPath();
 		cx.strokeStyle = "hsla(240, 50%, 50%, 1)";
-		cx.moveTo(this.x, this.y);
-		cx.lineTo(this.centerPoint.x,this.centerPoint.y);
+		cx.moveTo(this.x-this.radius, this.y-this.radius);
+		cx.lineTo(this.centerPoint.x-this.radius ,this.centerPoint.y-this.radius);
 		//log.log(this.centerPoint.x);
 		//cx.lineTo(-10,0);
 		cx.stroke();
@@ -61,8 +63,9 @@ var Zombie = Role.extend({
 		cx.beginPath();
 		cx.strokeStyle = "hsla(0, 50%, 50%, 1)";
 		cx.fillStyle = "hsla(0, 50%, 50%, 0.4)";
-		cx.arc(this.x, this.y, this.radius, this.dir, this.dir+Math.PI*2);
-		cx.lineTo(this.x, this.y);
+		cx.arc(this.x-this.radius, this.y-this.radius,
+			 this.radius, this.dir, this.dir+Math.PI*2);
+		cx.lineTo(this.x-this.radius, this.y-this.radius);
 		cx.stroke();
 		cx.fill();
 		cx.closePath();
@@ -71,5 +74,6 @@ var Zombie = Role.extend({
 
 var tmp_zombie_nx;
 var tmp_zombie_ny;
+var tmp_zombie_nk;
 var tzi;
 

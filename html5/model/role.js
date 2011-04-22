@@ -13,12 +13,19 @@ var Role = Class.extend({
 		//调整方向
 		this.dir += this.dirState;
 		
+		//方向越界
+		this.dir = (
+			Math.round( this.dir*10000 + 6.2832 ) % 62832
+			) / 10000;
+		
 		//调整速度
+		
+		//调整位置
 		tmp_role_v = this.v * time;
 		this.x += tmp_role_v * Math.cos( this.dir );
 		this.y += tmp_role_v * Math.sin( this.dir );
 		
-		//调整位置
+		//位置越界
 		this.x = ( this.x + VIEW_WIDTH ) % VIEW_WIDTH;
 		this.y = ( this.y + VIEW_HEIGHT ) % VIEW_HEIGHT;
     },
