@@ -14,6 +14,9 @@ var Role = Class.extend({
 		
 		this.x += this.v * Math.cos( this.dir );
 		this.y += this.v * Math.sin( this.dir );
+		
+		this.x = ( this.x + VIEW_WIDTH ) % VIEW_WIDTH;
+		this.y = ( this.y + VIEW_HEIGHT ) % VIEW_HEIGHT;
     },
 	drawLoop: function () {
 		

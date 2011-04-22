@@ -95,6 +95,9 @@ var infoCTime;
 const EYESHOT_ANGLE		= Math.PI / 3;
 const EYESHOT_RANGE		= 100;
 
+const VIEW_WIDTH		= 960;
+const VIEW_HEIGHT		= 640;
+
 
 document.onkeydown = function( event ) {
 	

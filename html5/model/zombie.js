@@ -4,6 +4,8 @@ var Zombie = Role.extend({
 		this._super(id);
 		this.radius = 10;
 		this.dir	= 1;
+		
+		this.neighborList = new Array();
     },
     getY: function() {
         return this.y;
@@ -12,7 +14,7 @@ var Zombie = Role.extend({
 		//画视野
 		
 		cx.beginPath();
-		cx.fillStyle = "hsla(0, 50%, 50%, 0.05)";
+		cx.fillStyle = "hsla(0, 50%, 50%, 0.03)";
 		cx.moveTo(this.x, this.y);
 		cx.arc(this.x, this.y, this.radius + EYESHOT_RANGE, this.dir + EYESHOT_ANGLE, this.dir - EYESHOT_ANGLE, true );
 		cx.fill();
