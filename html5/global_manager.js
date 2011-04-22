@@ -16,6 +16,24 @@ var GlobalManager = Class.extend({
 	eventLoop: function () {
 		cpsNewTime = new Date().getTime();
 		
+		//判断临近邻居
+		for ( i = 0; i<gm.zombieList.length; i++ ) {
+			gm.zombieList[i].neighborList.length = 0;
+		}
+		
+		for ( i = 0; i<gm.zombieList.length; i++ ) {
+			for ( j = i; j<gm.zombieList.length; j++ ) {
+				if ( isNeighbor( gm.zombieList[i],
+					gm.zombieList[j] ) ) {
+					gm.zombieList[i].neighborList
+						.push(gm.zombieList[j]);
+					gm.zombieList[j].neighborList
+						.push(gm.zombieList[i]);
+				}
+			}
+		}
+		
+		
 		for ( i = 0; i<gm.zombieList.length; i++ ) {
 			gm.zombieList[i].eventLoop(cpsNewTime - cpsLastTime);
 		}
@@ -93,7 +111,7 @@ var infoCTime;
 var infoZombieList;
 
 const EYESHOT_ANGLE		= Math.PI / 3;
-const EYESHOT_RANGE		= 100;
+const EYESHOT_RANGE		= 200;
 
 const VIEW_WIDTH		= 960;
 const VIEW_HEIGHT		= 640;

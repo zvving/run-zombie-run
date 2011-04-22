@@ -9,6 +9,7 @@
 	
 	<script src="utils/john_oo.js" type="text/javascript" charset="utf-8"></script>
 	<script src="utils/log.js" type="text/javascript" charset="utf-8"></script>
+	<script src="utils/unit.js" type="text/javascript" charset="utf-8"></script>
 	
 	<script src="model/role.js" type="text/javascript" charset="utf-8"></script>
 	<script src="model/zombie.js" type="text/javascript" charset="utf-8"></script>
@@ -38,6 +39,10 @@
 			cx = fCanvas.getContext("2d");
 			
 			gm.start();
+			
+			for (i=0; i<10; i++) {
+				gm.addZombie();
+			}
 			// fContext.fillStyle = "rgb(200,0,0)";
 			// 			fContext.fillRect (10, 10, 55, 50);
 			// 
