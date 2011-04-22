@@ -2,7 +2,7 @@ var GlobalManager = Class.extend({
     // init是构造函数
     init: function() {
 		this.zombieList = new Array();
-		z = new Zombie(11);
+		var z = new Zombie(11);
 		this.zombieList[0] = z ;
 		log.log("=== GlobalManager init..." );
 
@@ -38,11 +38,11 @@ var GlobalManager = Class.extend({
 		
 		cx.clearRect(0, 0, 960, 640);
 		cx.save();
-		cx.beginPath();
+		
 		for ( i = 0; i<gm.zombieList.length; i++ ) {
 			gm.zombieList[i].drawLoop();
 		}
-		cx.stroke();
+		
 		cx.restore();
 		
 		//计算绘图循环帧率
@@ -64,11 +64,15 @@ var GlobalManager = Class.extend({
 	
 	addZombie: function () {
 		
-		z = new Zombie(2);
+		var z = new Zombie(2);
 		z.dir = Math.random() * Math.PI * 2;
 		this.zombieList[ this.zombieList.length ] = z ;
-		
 		log.log("add a zombie..." + this.zombieList.length);
+	},
+	clearZombie: function () {
+		this.zombieList.length = 0;
+		
+		log.log("clear all zombie...");
 	}
 });
 
@@ -87,6 +91,9 @@ var infoFps;
 var infoFTime;
 var infoCps;
 var infoCTime;
+
+const EYESHOT_ANGLE		= Math.PI / 3;
+const EYESHOT_RANGE		= 100;
 
 
 document.onkeydown = function( event ) {
