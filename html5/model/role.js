@@ -1,29 +1,27 @@
 var Role = Class.extend({
     init: function(id) {
 		this.id	= id;
-        this.x	= 100;
-		this.y	= 200;
-		this.dir = 1.0;
-		this.dirState = -0.01;
+        this.x	= 480;
+		this.y	= 320;
+		this.dir = 10000;
+		this.dirState = -100;
 		this.v	= 0.05;
 		this.a	= 5;
     },
     eventLoop: function( time ) {
 		
 		//调整方向
-		this.dir += this.dirState;
+		this.dir += this.dirState * DIR_STATE_K;
 		
 		//方向越界
-		this.dir = (
-			Math.round( this.dir*10000 + 6.2832 ) % 62832
-			) / 10000;
+		this.dir = ( this.dir + 62832 ) % 62832;
 		
 		//调整速度
 		
 		//调整位置
 		tmp_role_v = this.v * time;
-		this.x += tmp_role_v * Math.cos( this.dir );
-		this.y += tmp_role_v * Math.sin( this.dir );
+		this.x += tmp_role_v * Math.cos( this.dir/10000 );
+		this.y += tmp_role_v * Math.sin( this.dir/10000 );
 		
 		//位置越界
 		this.x = ( this.x + VIEW_WIDTH ) % VIEW_WIDTH;

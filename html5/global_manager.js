@@ -3,6 +3,7 @@ var GlobalManager = Class.extend({
     init: function() {
 		this.zombieList = new Array();
 		log.log("=== GlobalManager init..." );
+		this.inGame = true;
 
     },
     start: function() {
@@ -16,26 +17,28 @@ var GlobalManager = Class.extend({
 	eventLoop: function () {
 		cpsNewTime = new Date().getTime();
 		
-		//判断临近邻居
-		for ( i = 0; i<gm.zombieList.length; i++ ) {
-			gm.zombieList[i].neighborList.length = 0;
-		}
+		if ( gm.inGame == true )  {
+			//判断临近邻居
+			for ( i = 0; i<gm.zombieList.length; i++ ) {
+				gm.zombieList[i].neighborList.length = 0;
+			}
 		
-		for ( i = 0; i<gm.zombieList.length; i++ ) {
-			for ( j = i; j<gm.zombieList.length; j++ ) {
-				if ( isNeighbor( gm.zombieList[i],
-					gm.zombieList[j] ) ) {
-					gm.zombieList[i].neighborList
-						.push(gm.zombieList[j]);
-					gm.zombieList[j].neighborList
-						.push(gm.zombieList[i]);
+			for ( i = 0; i<gm.zombieList.length; i++ ) {
+				for ( j = i; j<gm.zombieList.length; j++ ) {
+					if ( isNeighbor( gm.zombieList[i],
+						gm.zombieList[j] ) ) {
+						gm.zombieList[i].neighborList
+							.push(gm.zombieList[j]);
+						gm.zombieList[j].neighborList
+							.push(gm.zombieList[i]);
+					}
 				}
 			}
-		}
 		
 		
-		for ( i = 0; i<gm.zombieList.length; i++ ) {
-			gm.zombieList[i].eventLoop(cpsNewTime - cpsLastTime);
+			for ( i = 0; i<gm.zombieList.length; i++ ) {
+				gm.zombieList[i].eventLoop(cpsNewTime - cpsLastTime);
+			}
 		}
 		
 		//计算绘图循环帧率
@@ -81,7 +84,7 @@ var GlobalManager = Class.extend({
 	addZombie: function () {
 		
 		var z = new Zombie(2);
-		z.dir = Math.random() * Math.PI * 2;
+		z.dir = Math.round( Math.random() * Math.PI * 2 * 10000 );
 		this.zombieList[ this.zombieList.length ] = z ;
 		infoZombieList.innerText = this.zombieList.length;
 		log.log("add a zombie..." + this.zombieList.length);
@@ -110,11 +113,17 @@ var infoCps;
 var infoCTime;
 var infoZombieList;
 
-const EYESHOT_ANGLE		= Math.PI / 3;
-const EYESHOT_RANGE		= 200;
+var EYESHOT_ANGLE		= Math.PI / 3;
+var EYESHOT_RANGE		= 200;
+
+var DIR_STATE_K			= 150;
 
 const VIEW_WIDTH		= 960;
 const VIEW_HEIGHT		= 640;
+
+const DIR_STATE_LEFT	= -1;
+const DIR_STATE_RIGHT	= 1;
+const DIR_STATE_NONE	= 0;
 
 
 document.onkeydown = function( event ) {
