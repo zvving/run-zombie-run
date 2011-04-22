@@ -5,6 +5,8 @@ var Role = Class.extend({
 		this.y	= 200;
     },
     eventLoop: function() {
-        console.log("=== z:" + z.x + "|" + z.y + "|" + z.id);
-    }
+		log.log("e");
+    },
+	drawLoop: function () {
+	}
 });

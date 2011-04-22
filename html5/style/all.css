@@ -1,0 +1,35 @@
+#canvas_div {
+	margin: auto;
+	width: 960px;
+}
+
+#control_bar {
+	margin: auto;
+	width: 960px;
+	text-align: center;
+}
+
+.css3button{
+font:bold 20px "Comic Sans MS", cursive, sans-serif;
+font-style:normal;
+color:#909090;
+background:#dedede;
+border:1px none #bbb;
+text-shadow:0px 1px 0px #fff;
+box-shadow:1px 5px 10px #d1cfd1;
+-moz-box-shadow:1px 5px 10px #d1cfd1;
+-webkit-box-shadow:1px 5px 10px #d1cfd1;
+border-radius:10px 10px 10px 10px;
+-moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
+width:73px;
+padding:5px 10px;
+cursor:pointer;
+margin:0 auto;
+}
+.css3button:active{
+cursor:pointer;
+position:relative;
+top:2px;
+}
+

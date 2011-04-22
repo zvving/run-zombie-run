@@ -4,12 +4,13 @@ var GlobalManager = Class.extend({
 		this.zombieList = new Array();
 		z = new Zombie(11);
 		this.zombieList[0] = z ;
-		console.log("=== GlobalManager init..." + this.zombieList[0].x );
+		log.log("=== GlobalManager init..." + this.zombieList[0].x );
 
     },
     start: function() {
-		console.log("=== game start..." );
-		this.intervalId = setInterval( this.eventLoop , 1000);
+		log.log("=== game start..." );
+		this.eventIntervalId = setInterval( this.eventLoop , 1000);
+		this.drawIntervalId = setInterval( this.drawLoop , 40);
     },
 
 	eventLoop: function () {
@@ -17,17 +18,24 @@ var GlobalManager = Class.extend({
 			z.eventLoop();
 		}
 	},
+	drawLoop: function () {
+		cx.clearRect(0, 0, 960, 480);
+		cx.save();
+		for ( i = 0; i<gm.zombieList.length; i++ ) {
+			z.drawLoop();
+		}
+		cx.restore();
+	},
 
 	end: function() {
-		console.log("=== game end...");
+		log.log("=== game end...");
 		window.clearInterval( this.intervalId );
 	}
 	
 	
 });
 
-var gm = new GlobalManager();
-gm.start();
+
 
 document.onkeydown = function( event ) {
 	

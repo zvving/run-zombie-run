@@ -1,13 +1,19 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
 	<title>fly... fly...</title>
 	
-	<script src="john_oo.js" type="text/javascript" charset="utf-8"></script>
+	<link href="style/all.css" rel="stylesheet" type="text/css"/>
 	
-	<script src="role.js" type="text/javascript" charset="utf-8"></script>
-	<script src="zombie.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script src="utils/john_oo.js" type="text/javascript" charset="utf-8"></script>
+	<script src="utils/log.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script src="model/role.js" type="text/javascript" charset="utf-8"></script>
+	<script src="model/zombie.js" type="text/javascript" charset="utf-8"></script>
+	
+	
 	<script src="global_manager.js" type="text/javascript" charset="utf-8"></script>
 	
 	
@@ -16,24 +22,30 @@
 	
 	
 	<script type="text/javascript" charset="utf-8">
+	
+		var gm;
+		var cx;
+	
 		function f() {
 			var fCanvas = document.getElementById("f_canvas");
-			var fContext = fCanvas.getContext("2d");
-			fContext.fillStyle = "rgb(200,0,0)";
-			fContext.fillRect (10, 10, 55, 50);
-
-			fContext.fillStyle = "rgba(0, 0, 200, 0.5)";
-			fContext.fillRect (30, 30, 55, 50);
-			
-			//fContext.beginPath();
-			fContext.arc(75,75,50,0,Math.PI*2,true); // Outer circle
-			//fContext.moveTo(110,75);
-			fContext.arc(75,75,35,0,Math.PI,false);   // Mouth (clockwise)
-			//fContext.moveTo(65,65);
-			fContext.arc(60,65,5,0,Math.PI*2,true);  // Left eye
-			fContext.moveTo(95,65);
-			fContext.arc(90,65,5,0,Math.PI*2,true);  // Right eye
-			//fContext.stroke();
+			cx = fCanvas.getContext("2d");
+			gm = new GlobalManager();
+			gm.start();
+			// fContext.fillStyle = "rgb(200,0,0)";
+			// 			fContext.fillRect (10, 10, 55, 50);
+			// 
+			// 			fContext.fillStyle = "rgba(0, 0, 200, 0.5)";
+			// 			fContext.fillRect (30, 30, 55, 50);
+			// 			
+			// 			fContext.beginPath();
+			// 			fContext.arc(75,75,50,0,Math.PI*2,true); // Outer circle
+			// 			//fContext.moveTo(110,75);
+			// 			fContext.arc(75,75,35,0,Math.PI,false);   // Mouth (clockwise)
+			// 			//fContext.moveTo(65,65);
+			// 			fContext.arc(60,65,5,0,Math.PI*2,true);  // Left eye
+			// 			fContext.moveTo(95,65);
+			// 			fContext.arc(90,65,5,0,Math.PI*2,true);  // Right eye
+			// 			fContext.stroke();
 		}
 	</script>
 	
@@ -44,8 +56,12 @@
 </head>
 
 <body onload="f();">
-	<canvas id="f_canvas" width="960" height="640"></canvas>
-	
+	<div id="canvas_div">
+		<canvas id="f_canvas" width="960" height="640"></canvas>
+
+	</div>
+	<hr/>
+	<div id="control_bar"><div class="css3button">Debug</div></div>
 
 </body>
 
