@@ -6,6 +6,7 @@ var Zombie = Role.extend({
 		
 		this.neighborList = new Array();
 		this.centerPoint = new Point();
+		this.matchDir	= 0;
     },
     getY: function() {
         return this.y;
@@ -17,7 +18,7 @@ var Zombie = Role.extend({
 		this._super(time);
 	},
 	boids: function() {
-		//Flock Centering
+		
 		if ( this.neighborList.length == 0 ) {
 			this.centerPoint.x = this.x;
 			this.centerPoint.y = this.y;
@@ -25,35 +26,39 @@ var Zombie = Role.extend({
 			return;
 		}
 		
-		tmp_zombie_nx = 0;
-		tmp_zombie_ny = 0;
+		//轮询 zombie 计算累积量
+		tmp_zombie_nx	= 0;
+		tmp_zombie_ny	= 0;
+		tmp_zombie_ndir	= 0;
 		for (tzi = 0; tzi<this.neighborList.length; tzi++) {
-			tmp_zombie_nx = tmp_zombie_nx + this.neighborList[tzi].x;
-			tmp_zombie_ny = tmp_zombie_ny + this.neighborList[tzi].y;
+			tmp_zombie_nx	+= this.neighborList[tzi].x;
+			tmp_zombie_ny	+= this.neighborList[tzi].y;
+			tmp_zombie_ndir	+= this.neighborList[tzi].dir;
 		}
-		this.centerPoint.x = tmp_zombie_nx / this.neighborList.length;
-		this.centerPoint.y = tmp_zombie_ny / this.neighborList.length;
 		
-		tmp_zombie_nk = Math.atan2(
+		//求平均量
+		this.centerPoint.x	= tmp_zombie_nx / this.neighborList.length;
+		this.centerPoint.y	= tmp_zombie_ny / this.neighborList.length;
+		this.matchDir		= tmp_zombie_ndir / this.neighborList.length;
+		
+		var DIR_STATE_K_CENTER = 1;
+		//Flock Centering
+		tmp_zombie_nk = Math.round( Math.atan2(
 			this.centerPoint.y - this.y,
 			this.centerPoint.x - this.x
-			) *10000 ;
+			) *10000 );
+		//tmp_zombie_nk = ( tmp_zombie_nk + 62832 ) % 62832;
+		this.dirState = 0;
+		this.dirState += ( this.dir - tmp_zombie_nk + 62832 ) % 62832 < 31416 
+			? DIR_STATE_LEFT*DIR_STATE_K_CENTER 
+			: DIR_STATE_RIGHT*DIR_STATE_K_CENTER;
 		
-		tmp_zombie_nk = (
-			Math.round( tmp_zombie_nk + 62832 ) % 62832
-			);
-
-		var ccc = ( this.dir - tmp_zombie_nk + 62832 ) % 62832;
-
-		this.dirState = ccc < 31416 ? DIR_STATE_LEFT : DIR_STATE_RIGHT;
+		var DIR_STATE_K_MATCH = 0.7;
+		this.dirState += ( this.dir - this.matchDir + 62832 ) % 62832 < 31416 
+			? DIR_STATE_LEFT*DIR_STATE_K_MATCH 
+			: DIR_STATE_RIGHT*DIR_STATE_K_MATCH;
+		//log.log( this.matchDir );
 		
-		
-		//log.log(tmp_zombie_nx);
-		//for ( i = 0; i<this.neighborList.length; i++ ) {
-			//tmp_zombie_nx += this.neighborList[i].x;
-			//log.log(i);
-		//}
-		//log.log(this.neighborList.length);
 	},
 	drawLoop: function () {
 		//画视野
@@ -90,5 +95,6 @@ var Zombie = Role.extend({
 var tmp_zombie_nx;
 var tmp_zombie_ny;
 var tmp_zombie_nk;
+var tmp_zombie_ndir;
 var tzi;
 
