@@ -19,6 +19,8 @@ var Zombie = Role.extend({
 	boids: function() {
 		//Flock Centering
 		if ( this.neighborList.length == 0 ) {
+			this.centerPoint.x = this.x;
+			this.centerPoint.y = this.y;
 			this.dirState = DIR_STATE_NONE;
 			return;
 		}
@@ -35,10 +37,10 @@ var Zombie = Role.extend({
 		tmp_zombie_nk = Math.atan2(
 			this.centerPoint.y - this.y,
 			this.centerPoint.x - this.x
-			);
+			) *10000 ;
 		
 		tmp_zombie_nk = (
-			Math.round( tmp_zombie_nk*10000 + 62832 ) % 62832
+			Math.round( tmp_zombie_nk + 62832 ) % 62832
 			);
 
 		var ccc = ( this.dir - tmp_zombie_nk + 62832 ) % 62832;

@@ -4,17 +4,20 @@ var Role = Class.extend({
         this.x	= 480;
 		this.y	= 320;
 		this.dir = 10000;
-		this.dirState = -100;
+		this.dirState = DIR_STATE_NONE;
 		this.v	= 0.05;
 		this.a	= 5;
     },
     eventLoop: function( time ) {
 		
 		//调整方向
-		this.dir += this.dirState * DIR_STATE_K;
+		if ( this.dirState != DIR_STATE_NONE ) {
+			this.dir += this.dirState * DIR_STATE_K;
+
+			//方向越界
+			this.dir = ( this.dir + 62832 ) % 62832;
+		}
 		
-		//方向越界
-		this.dir = ( this.dir + 62832 ) % 62832;
 		
 		//调整速度
 		

@@ -24,7 +24,7 @@ var GlobalManager = Class.extend({
 			}
 		
 			for ( i = 0; i<gm.zombieList.length; i++ ) {
-				for ( j = i; j<gm.zombieList.length; j++ ) {
+				for ( j = i+1; j<gm.zombieList.length; j++ ) {
 					if ( isNeighbor( gm.zombieList[i],
 						gm.zombieList[j] ) ) {
 						gm.zombieList[i].neighborList
