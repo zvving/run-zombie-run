@@ -23,7 +23,7 @@
 	
 	<script type="text/javascript" charset="utf-8">
 	
-		var gm;
+		var gm = new GlobalManager();
 		var cx;
 	
 		function f() {
@@ -36,7 +36,6 @@
 			
 			cx = fCanvas.getContext("2d");
 			
-			gm = new GlobalManager();
 			gm.start();
 			// fContext.fillStyle = "rgb(200,0,0)";
 			// 			fContext.fillRect (10, 10, 55, 50);
@@ -80,11 +79,9 @@
 	<hr/>
 	
 	<div id="control_bar">
-		<div class="css3button" id="btn_debug">Debug</div>
-		<div class="css3button" id="btn_add_zombie">Add</div>
+		<div id="btn_debug">Debug</div>
+		<div id="btn_add_zombie" onclick="javascript:gm.addZombie();">Add</div>
 	</div>
-
-	<hr/>
 </body>
 
 </html>

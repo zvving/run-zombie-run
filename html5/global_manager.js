@@ -4,7 +4,7 @@ var GlobalManager = Class.extend({
 		this.zombieList = new Array();
 		z = new Zombie(11);
 		this.zombieList[0] = z ;
-		log.log("=== GlobalManager init..." + this.zombieList[0].x );
+		log.log("=== GlobalManager init..." );
 
     },
     start: function() {
@@ -19,7 +19,7 @@ var GlobalManager = Class.extend({
 		cpsNewTime = new Date().getTime();
 		
 		for ( i = 0; i<gm.zombieList.length; i++ ) {
-			z.eventLoop(cpsNewTime - cpsLastTime);
+			gm.zombieList[i].eventLoop(cpsNewTime - cpsLastTime);
 		}
 		
 		//计算绘图循环帧率
@@ -38,9 +38,11 @@ var GlobalManager = Class.extend({
 		
 		cx.clearRect(0, 0, 960, 640);
 		cx.save();
+		cx.beginPath();
 		for ( i = 0; i<gm.zombieList.length; i++ ) {
-			z.drawLoop();
+			gm.zombieList[i].drawLoop();
 		}
+		cx.stroke();
 		cx.restore();
 		
 		//计算绘图循环帧率
@@ -58,9 +60,16 @@ var GlobalManager = Class.extend({
 	end: function() {
 		log.log("=== game end...");
 		window.clearInterval( this.intervalId );
+	},
+	
+	addZombie: function () {
+		
+		z = new Zombie(2);
+		z.dir = Math.random() * Math.PI * 2;
+		this.zombieList[ this.zombieList.length ] = z ;
+		
+		log.log("add a zombie..." + this.zombieList.length);
 	}
-	
-	
 });
 
 var fps				= 0;
@@ -78,8 +87,6 @@ var infoFps;
 var infoFTime;
 var infoCps;
 var infoCTime;
-
-
 
 
 document.onkeydown = function( event ) {

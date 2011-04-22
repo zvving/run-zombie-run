@@ -9,7 +9,10 @@ var Role = Class.extend({
 		this.a	= 5;
     },
     eventLoop: function( time ) {
-		this.x += this.v * Math.sin( this.dir );
+		
+		
+		
+		this.x += this.v * Math.cos( this.dir );
 		this.y += this.v * Math.sin( this.dir );
     },
 	drawLoop: function () {

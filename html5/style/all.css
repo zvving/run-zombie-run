@@ -17,7 +17,9 @@
 	height: 35px;
 }
 
-.css3button{
+
+
+.css3button, #control_bar div{
 float: left;
 font:bold 20px "Comic Sans MS", cursive, sans-serif;
 font-style:normal;
@@ -35,8 +37,11 @@ width:73px;
 padding:5px 10px;
 cursor:pointer;
 margin:0 8px 0 0;
+
+-moz-user-select:	none;
+-webkit-user-select: none;
 }
-.css3button:active{
+.css3button:active, #control_bar div:active{
 cursor:pointer;
 position:relative;
 top:2px;
