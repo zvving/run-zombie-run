@@ -28,7 +28,14 @@
 	
 		function f() {
 			var fCanvas = document.getElementById("f_canvas");
+			
+			infoFps		= document.getElementById("fps");
+			infoFTime	= document.getElementById("fps_time");
+			infoCps		= document.getElementById("cps");
+			infoCTime	= document.getElementById("cps_time");
+			
 			cx = fCanvas.getContext("2d");
+			
 			gm = new GlobalManager();
 			gm.start();
 			// fContext.fillStyle = "rgb(200,0,0)";
@@ -56,13 +63,28 @@
 </head>
 
 <body onload="f();">
+
+	<div id="info_bar">
+		FPS:<span id="fps"></span>
+		FTime:<span id="fps_time"></span>
+		CPS:<span id="cps"></span>
+		CTime:<span id="cps_time"></span>
+	</div>
+
+	<hr/>
+	
 	<div id="canvas_div">
 		<canvas id="f_canvas" width="960" height="640"></canvas>
 
 	</div>
 	<hr/>
-	<div id="control_bar"><div class="css3button">Debug</div></div>
+	
+	<div id="control_bar">
+		<div class="css3button" id="btn_debug">Debug</div>
+		<div class="css3button" id="btn_add_zombie">Add</div>
+	</div>
 
+	<hr/>
 </body>
 
 </html>

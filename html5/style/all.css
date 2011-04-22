@@ -3,13 +3,22 @@
 	width: 960px;
 }
 
-#control_bar {
+#info_bar {
 	margin: auto;
 	width: 960px;
 	text-align: center;
 }
 
+
+#control_bar {
+	margin: auto;
+	width: 960px;
+	text-align: center;
+	height: 35px;
+}
+
 .css3button{
+float: left;
 font:bold 20px "Comic Sans MS", cursive, sans-serif;
 font-style:normal;
 color:#909090;
@@ -25,7 +34,7 @@ border-radius:10px 10px 10px 10px;
 width:73px;
 padding:5px 10px;
 cursor:pointer;
-margin:0 auto;
+margin:0 8px 0 0;
 }
 .css3button:active{
 cursor:pointer;

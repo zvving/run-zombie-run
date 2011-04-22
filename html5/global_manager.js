@@ -9,22 +9,50 @@ var GlobalManager = Class.extend({
     },
     start: function() {
 		log.log("=== game start..." );
-		this.eventIntervalId = setInterval( this.eventLoop , 1000);
-		this.drawIntervalId = setInterval( this.drawLoop , 40);
+		this.eventIntervalId = setInterval( this.eventLoop , 20);
+		this.drawIntervalId = setInterval( this.drawLoop , 20);
+		
+		
     },
 
 	eventLoop: function () {
+		cpsNewTime = new Date().getTime();
+		
 		for ( i = 0; i<gm.zombieList.length; i++ ) {
-			z.eventLoop();
+			z.eventLoop(cpsNewTime - cpsLastTime);
 		}
+		
+		//计算绘图循环帧率
+		if ( cpsNewTime - cpsSecondTime >= 1000 ) {
+			infoCps.innerText = fps ;
+			cpsSecondTime = cpsNewTime;
+			cps = 0;
+		}
+		cps ++;
+		
+		infoCTime.innerText = new Date().getTime() - cpsNewTime;
+		cpsLastTime = cpsNewTime;
 	},
 	drawLoop: function () {
-		cx.clearRect(0, 0, 960, 480);
+		fpsNewTime = new Date().getTime();
+		
+		cx.clearRect(0, 0, 960, 640);
 		cx.save();
 		for ( i = 0; i<gm.zombieList.length; i++ ) {
 			z.drawLoop();
 		}
 		cx.restore();
+		
+		//计算绘图循环帧率
+		if ( fpsNewTime - fpsSecondTime >= 1000 ) {
+			infoFps.innerText = fps ;
+			fpsSecondTime = fpsNewTime;
+			fps = 0;
+		}
+		fps ++;
+		
+		infoFTime.innerText = new Date().getTime() - fpsNewTime;
+		fpsLastTime = fpsNewTime;
 	},
 
 	end: function() {
@@ -34,6 +62,23 @@ var GlobalManager = Class.extend({
 	
 	
 });
+
+var fps				= 0;
+var fpsNewTime		= 0;
+var fpsLastTime		= 0;
+var fpsSecondTime	= 0;
+var fTime			= 0;
+
+var cps				= 0;
+var cpsNewTime		= 0;
+var cpsLastTime		= 0;
+var cpsSecondTime	= 0;
+
+var infoFps;
+var infoFTime;
+var infoCps;
+var infoCTime;
+
 
 
 
