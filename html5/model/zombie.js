@@ -4,9 +4,10 @@ var Zombie = Role.extend({
 		this._super(id);
 		this.radius = 10;
 		
-		this.neighborList = new Array();
-		this.centerPoint = new Point();
-		this.matchDir	= 0;
+		this.neighborList	= new Array();
+		this.centerPoint	= new Point();
+		this.matchDir		= 0;
+		this.nearZombie		= null;
     },
     getY: function() {
         return this.y;
@@ -18,13 +19,25 @@ var Zombie = Role.extend({
 		this._super(time);
 	},
 	boids: function() {
+		this.centerPoint.x	= this.x;
+		this.centerPoint.y	= this.y;
+		this.matchDir		= this.dir;
+		
+		if ( this.nearZombie != null ) {
+			this.dirState = - dirTurnWhere (this.dir, this.x, this.y,
+				this.nearZombie.x, this.nearZombie.y ) * DIR_STATE_K_NEAR;
+			return;
+		}
+		
 		
 		if ( this.neighborList.length == 0 ) {
-			this.centerPoint.x = this.x;
-			this.centerPoint.y = this.y;
+
 			this.dirState = DIR_STATE_NONE;
 			return;
 		}
+		
+
+		
 		
 		//轮询 zombie 计算累积量
 		tmp_zombie_nx	= 0;
@@ -39,25 +52,27 @@ var Zombie = Role.extend({
 		//求平均量
 		this.centerPoint.x	= tmp_zombie_nx / this.neighborList.length;
 		this.centerPoint.y	= tmp_zombie_ny / this.neighborList.length;
-		this.matchDir		= tmp_zombie_ndir / this.neighborList.length;
+		this.matchDir		= Math.round ( 
+			tmp_zombie_ndir / this.neighborList.length );
 		
-		var DIR_STATE_K_CENTER = 1;
+
 		//Flock Centering
-		tmp_zombie_nk = Math.round( Math.atan2(
-			this.centerPoint.y - this.y,
-			this.centerPoint.x - this.x
-			) *10000 );
+		// tmp_zombie_nk = Math.round( Math.atan2(
+		// 	this.centerPoint.y - this.y,
+		// 	this.centerPoint.x - this.x
+		// 	) *10000 );
 		//tmp_zombie_nk = ( tmp_zombie_nk + 62832 ) % 62832;
-		this.dirState = 0;
-		this.dirState += ( this.dir - tmp_zombie_nk + 62832 ) % 62832 < 31416 
-			? DIR_STATE_LEFT*DIR_STATE_K_CENTER 
-			: DIR_STATE_RIGHT*DIR_STATE_K_CENTER;
 		
-		var DIR_STATE_K_MATCH = 0.7;
+		tmp_zombie_nk = dirTurnWhere (this.dir, this.x, this.y,
+			this.centerPoint.x, this.centerPoint.y );
+		
+		this.dirState = 0;
+		this.dirState += tmp_zombie_nk*DIR_STATE_K_CENTER;
+
 		this.dirState += ( this.dir - this.matchDir + 62832 ) % 62832 < 31416 
 			? DIR_STATE_LEFT*DIR_STATE_K_MATCH 
 			: DIR_STATE_RIGHT*DIR_STATE_K_MATCH;
-		//log.log( this.matchDir );
+		log.log( this.matchDir );
 		
 	},
 	drawLoop: function () {
@@ -78,6 +93,14 @@ var Zombie = Role.extend({
 		cx.stroke();
 		cx.closePath();
 		
+		
+		cx.beginPath();
+		cx.strokeStyle = "hsla(120, 50%, 50%, 0.5)";
+		cx.moveTo(this.x, this.y);
+		cx.lineTo( Math.cos(this.matchDir/10000)*50 + this.x,
+			Math.sin(this.matchDir/10000)*50 + this.y );
+		cx.stroke();
+		cx.closePath();
 		
 		
 		cx.beginPath();

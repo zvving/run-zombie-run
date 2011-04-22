@@ -21,16 +21,30 @@ var GlobalManager = Class.extend({
 			//判断临近邻居
 			for ( i = 0; i<gm.zombieList.length; i++ ) {
 				gm.zombieList[i].neighborList.length = 0;
+				gm.zombieList[i].nearZombie = null;
 			}
 		
 			for ( i = 0; i<gm.zombieList.length; i++ ) {
 				for ( j = i+1; j<gm.zombieList.length; j++ ) {
-					if ( isNeighbor( gm.zombieList[i],
-						gm.zombieList[j] ) ) {
+					tmp_manager_distance = 
+						distance ( gm.zombieList[i],
+							gm.zombieList[j] )
+					if ( tmp_manager_distance < EYESHOT_RANGE ) {
 						gm.zombieList[i].neighborList
 							.push(gm.zombieList[j]);
 						gm.zombieList[j].neighborList
 							.push(gm.zombieList[i]);
+						if ( tmp_manager_distance < EYESHOT_RANGE/4 ) {
+							if ( gm.nearZombie == null ||
+								tmp_manager_distance 
+								< distance ( gm.zombieList[i],
+									gm.nearZombie ) ) {
+									gm.zombieList[i].nearZombie = 
+										gm.zombieList[j];
+									gm.zombieList[j].nearZombie = 
+										gm.zombieList[i];	
+							}
+						}
 					}
 				}
 			}
@@ -96,6 +110,9 @@ var GlobalManager = Class.extend({
 	}
 });
 
+var tmp_manager_distance = 0;
+var tmp_manager_distance_min = 0;
+
 var fps				= 0;
 var fpsNewTime		= 0;
 var fpsLastTime		= 0;
@@ -117,6 +134,10 @@ var EYESHOT_ANGLE		= Math.PI / 3;
 var EYESHOT_RANGE		= 200;
 
 var DIR_STATE_K			= 150;
+var DIR_STATE_K_CENTER	= 1;
+var DIR_STATE_K_MATCH	= 0.8;
+var DIR_STATE_K_NEAR	= 1;
+
 
 const VIEW_WIDTH		= 960;
 const VIEW_HEIGHT		= 640;
