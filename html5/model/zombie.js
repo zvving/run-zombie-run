@@ -6,6 +6,8 @@ var Zombie = Role.extend({
 		
 		this.neighborList	= new Array();
 		this.centerPoint	= new Point();
+		this.centerPoint.x	= this.x;
+		this.centerPoint.y	= this.y;
 		this.matchDir		= 0;
 		this.nearZombie		= null;
     },
@@ -79,7 +81,7 @@ var Zombie = Role.extend({
 		//画视野
 		
 		cx.beginPath();
-		cx.fillStyle = "hsla(0, 50%, 50%, 0.03)";
+		cx.fillStyle = "hsla(0, 50%, 50%, 0.1)";
 		cx.moveTo(this.x, this.y);
 		cx.arc(this.x, this.y, this.radius + EYESHOT_RANGE, this.dir/10000 + EYESHOT_ANGLE, this.dir/10000 - EYESHOT_ANGLE, true );
 		cx.fill();

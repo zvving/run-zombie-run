@@ -118,14 +118,18 @@ var GlobalManager = Class.extend({
 	ohDie: function () {
 		log.log("die");
 		this.player.isLive = false;
+		audioDie.load();
 		audioDie.play();
 	},
 	restart: function() {
 		this.player.isLive = true;
+		audioRestart.load();
 		audioRestart.play();
 	},
 	pause: function() {
 		this.inGame = this.inGame ? false : true;
+		audioPu.load();
+		audioPu.play();
 	},
 	addZombie: function () {
 		
@@ -134,11 +138,15 @@ var GlobalManager = Class.extend({
 		this.zombieList[ this.zombieList.length ] = z ;
 		infoZombieList.innerText = this.zombieList.length;
 		log.log("add a zombie..." + this.zombieList.length);
+		audioPu.load();
+		audioPu.play();
 	},
 	clearZombie: function () {
 		this.zombieList.length = 0;
 		infoZombieList.innerText = 0;
 		log.log("clear all zombie...");
+		audioPu.load();
+		audioPu.play();
 	},
 	debug: function() {
 		

@@ -34,6 +34,7 @@
 		var infoZombieList;
 		var audioRestart;
 		var audioDie;
+		var audioPu;
 		
 	
 		function f() {
@@ -47,6 +48,7 @@
 			
 			audioRestart = document.getElementById("audio_restart");
 			audioDie = document.getElementById("audio_die");
+			audioPu = document.getElementById("audio_pu");
 			
 			cx = fCanvas.getContext("2d");
 			
@@ -57,7 +59,6 @@
 			}
 		}
 	</script>
-	
 </head>
 
 <body onload="f();">
@@ -77,10 +78,10 @@
 
 	</div>
 	
-	<hr/>
 	<div>
 		<audio id="audio_restart" src="audio/加一条命.mp3" preload="auto" hidden>浏览器不支持 audio </audio>
 		<audio id="audio_die" src="audio/死亡2.mp3" preload="auto" hidden>浏览器不支持 audio </audio>
+		<audio id="audio_pu" src="audio/火球或壳击敌人.mp3" preload="auto" hidden>浏览器不支持 audio </audio>
 	</div>
 	
 	<div id="control_bar">
@@ -94,6 +95,8 @@
 			<audio controls src="audio/you_were_there.mp3" loop >浏览器不支持 audio </audio>
 		</div>
 	</div>
+	<hr/>
+	开源作品，项目托管在 <a href="https://github.com/merlyle/run-zombie-run" rel="github">GitHub</a> ，作者邮箱 <a href="mailto://merlyle@gmail.com">merlyle@gmail.com</a>
 </body>
 
 </html>
