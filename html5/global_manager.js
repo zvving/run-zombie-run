@@ -23,6 +23,12 @@ var GlobalManager = Class.extend({
 			for ( i = 0; i<gm.zombieList.length; i++ ) {
 				gm.zombieList[i].neighborList.length = 0;
 				gm.zombieList[i].nearZombie = null;
+				
+				if ( gm.player.isLive  &&
+					( distance(gm.player, gm.zombieList[i])
+					< RADIUS_ZOMBIE + RADIUS_PLAYER ) ) {
+					gm.ohDie();
+				}
 			}
 		
 			for ( i = 0; i<gm.zombieList.length; i++ ) {
@@ -51,7 +57,10 @@ var GlobalManager = Class.extend({
 			}
 		
 			//处理 player event loop
-			gm.player.eventLoop(cpsNewTime - cpsLastTime);
+			if ( gm.player.isLive == true ) {
+				gm.player.eventLoop(cpsNewTime - cpsLastTime);
+			}
+			
 			// TODO 优化多次使用的计算参数
 		
 			//处理 zombie event loop
@@ -83,8 +92,10 @@ var GlobalManager = Class.extend({
 		}
 		
 		//绘制 player
-		gm.player.drawLoop();
-		
+		if ( gm.player.isLive == true ) {
+			gm.player.drawLoop();
+		}
+
 		cx.restore();
 		
 		//计算绘图循环帧率
@@ -104,6 +115,10 @@ var GlobalManager = Class.extend({
 		window.clearInterval( this.intervalId );
 	},
 	
+	ohDie: function () {
+		log.log("die");
+		this.player.isLive = false;
+	},
 	addZombie: function () {
 		
 		var z = new Zombie(2);
@@ -154,6 +169,9 @@ const VIEW_HEIGHT		= 640;
 const DIR_STATE_LEFT	= -1;
 const DIR_STATE_RIGHT	= 1;
 const DIR_STATE_NONE	= 0;
+
+const RADIUS_ZOMBIE		= 10;
+const RADIUS_PLAYER		= 15;
 
 // var eventLoop = function () {
 // 	console.log("=== in eventLoop:" + gm.lo);

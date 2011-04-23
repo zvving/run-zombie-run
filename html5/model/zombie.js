@@ -2,7 +2,7 @@ var Zombie = Role.extend({
     // init是构造函数
     init: function(id) {
 		this._super(id);
-		this.radius = 10;
+		this.radius = RADIUS_ZOMBIE;
 		
 		this.neighborList	= new Array();
 		this.centerPoint	= new Point();

@@ -2,9 +2,10 @@ var Player = Role.extend({
     // init是构造函数
     init: function(id) {
 		this._super(id);
-		this.radius = 20;
+		this.radius = RADIUS_PLAYER;
 		this.x = 200;
 		this.y = 200;
+		this.isLive = true;
     },
 	eventLoop: function( time ) {
 		this._super(time);
