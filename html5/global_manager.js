@@ -120,6 +120,13 @@ var GlobalManager = Class.extend({
 		this.player.isLive = false;
 		audioDie.play();
 	},
+	restart: function() {
+		this.player.isLive = true;
+		audioRestart.play();
+	},
+	pause: function() {
+		this.inGame = this.inGame ? false : true;
+	},
 	addZombie: function () {
 		
 		var z = new Zombie(2);
@@ -132,6 +139,9 @@ var GlobalManager = Class.extend({
 		this.zombieList.length = 0;
 		infoZombieList.innerText = 0;
 		log.log("clear all zombie...");
+	},
+	debug: function() {
+		
 	}
 });
 

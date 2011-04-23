@@ -61,6 +61,22 @@ document.onkeyup = function( event ) {
 			break;
 		case 40://down
 			break;
+		//control
+		case 65://a
+			gm.addZombie();
+			break;
+		case 67://c
+			gm.clearZombie();
+			break;
+		case 68://d
+			gm.debug();
+			break;
+		case 80://p
+			gm.pause();
+			break;
+		case 82://r
+			gm.restart();
+			break;
 		default:
 			break;
 	}

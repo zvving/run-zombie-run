@@ -26,6 +26,15 @@
 	
 		var gm = new GlobalManager();
 		var cx;
+		
+		var infoFps;
+		var infoFTime;
+		var infoCps;
+		var infoCTime;
+		var infoZombieList;
+		var audioRestart;
+		var audioDie;
+		
 	
 		function f() {
 			var fCanvas = document.getElementById("f_canvas");
@@ -49,10 +58,6 @@
 		}
 	</script>
 	
-	<style type="text/css">
-		canvas { border: 1px solid black; }
-	</style>
-	
 </head>
 
 <body onload="f();">
@@ -68,7 +73,7 @@
 	<hr/>
 	
 	<div id="canvas_div">
-		<canvas id="f_canvas" width="960" height="640"></canvas>
+		<canvas id="f_canvas" width="960" height="640" style="border: 1px solid black;"></canvas>
 
 	</div>
 	
@@ -79,14 +84,14 @@
 	</div>
 	
 	<div id="control_bar">
-		<button id="btn_debug">Debug</button>
+		<button  id="btn_debug" onclick="javascript:gm.debug();">Debug</button>
 		<button id="btn_add_zombie" onclick="javascript:gm.addZombie();">Add</button>
 		<button id="btn_add_zombie" onclick="javascript:gm.clearZombie();">Clear</button>
 		<button id="btn_add_zombie" 
-			onclick="javascript:gm.inGame = gm.inGame == true ? false : true;">Pause</button>
-		<button id="btn_restart" onclick="javascript:gm.player.isLive = true;audioRestart.play();">Restart</button>
+			onclick="javascript:gm.pause();">Pause</button>
+		<button id="btn_restart" onclick="javascript:gm.restart();">Restart</button>
 		<div style="float:right;">
-			<audio controls src="audio/you_were_there.mp3" autoplay loop >浏览器不支持 audio </audio>
+			<audio controls src="audio/you_were_there.mp3" loop >浏览器不支持 audio </audio>
 		</div>
 	</div>
 </body>
