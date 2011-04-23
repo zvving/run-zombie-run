@@ -9,6 +9,11 @@
 	text-align: center;
 }
 
+#info_bar span{
+	display: inline-block;
+	width: 50px;
+}
+
 
 #control_bar {
 	margin: auto;

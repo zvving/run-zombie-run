@@ -72,7 +72,7 @@ var Zombie = Role.extend({
 		this.dirState += ( this.dir - this.matchDir + 62832 ) % 62832 < 31416 
 			? DIR_STATE_LEFT*DIR_STATE_K_MATCH 
 			: DIR_STATE_RIGHT*DIR_STATE_K_MATCH;
-		log.log( this.matchDir );
+		
 		
 	},
 	drawLoop: function () {

@@ -1,7 +1,8 @@
 var GlobalManager = Class.extend({
     // init是构造函数
     init: function() {
-		this.zombieList = new Array();
+		this.zombieList	= new Array();
+		this.player		= new Player();
 		log.log("=== GlobalManager init..." );
 		this.inGame = true;
 
@@ -49,7 +50,11 @@ var GlobalManager = Class.extend({
 				}
 			}
 		
+			//处理 player event loop
+			gm.player.eventLoop(cpsNewTime - cpsLastTime);
+			// TODO 优化多次使用的计算参数
 		
+			//处理 zombie event loop
 			for ( i = 0; i<gm.zombieList.length; i++ ) {
 				gm.zombieList[i].eventLoop(cpsNewTime - cpsLastTime);
 			}
@@ -72,9 +77,13 @@ var GlobalManager = Class.extend({
 		cx.clearRect(0, 0, 960, 640);
 		cx.save();
 		
+		//绘制 zombie 
 		for ( i = 0; i<gm.zombieList.length; i++ ) {
 			gm.zombieList[i].drawLoop();
 		}
+		
+		//绘制 player
+		gm.player.drawLoop();
 		
 		cx.restore();
 		
@@ -145,19 +154,6 @@ const VIEW_HEIGHT		= 640;
 const DIR_STATE_LEFT	= -1;
 const DIR_STATE_RIGHT	= 1;
 const DIR_STATE_NONE	= 0;
-
-
-document.onkeydown = function( event ) {
-	
-	switch ( event.keyCode ) {
-		case 65:
-			alert('a');
-			break;
-		default:
-			break;
-	}
-
-}
 
 // var eventLoop = function () {
 // 	console.log("=== in eventLoop:" + gm.lo);
