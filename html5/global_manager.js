@@ -118,6 +118,7 @@ var GlobalManager = Class.extend({
 	ohDie: function () {
 		log.log("die");
 		this.player.isLive = false;
+		audioDie.play();
 	},
 	addZombie: function () {
 		

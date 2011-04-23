@@ -36,6 +36,9 @@
 			infoCTime	= document.getElementById("cps_time");
 			infoZombieList	= document.getElementById("zombie_list_number");
 			
+			audioRestart = document.getElementById("audio_restart");
+			audioDie = document.getElementById("audio_die");
+			
 			cx = fCanvas.getContext("2d");
 			
 			gm.start();
@@ -43,21 +46,6 @@
 			for (i=0; i<20; i++) {
 				gm.addZombie();
 			}
-			// fContext.fillStyle = "rgb(200,0,0)";
-			// 			fContext.fillRect (10, 10, 55, 50);
-			// 
-			// 			fContext.fillStyle = "rgba(0, 0, 200, 0.5)";
-			// 			fContext.fillRect (30, 30, 55, 50);
-			// 			
-			// 			fContext.beginPath();
-			// 			fContext.arc(75,75,50,0,Math.PI*2,true); // Outer circle
-			// 			//fContext.moveTo(110,75);
-			// 			fContext.arc(75,75,35,0,Math.PI,false);   // Mouth (clockwise)
-			// 			//fContext.moveTo(65,65);
-			// 			fContext.arc(60,65,5,0,Math.PI*2,true);  // Left eye
-			// 			fContext.moveTo(95,65);
-			// 			fContext.arc(90,65,5,0,Math.PI*2,true);  // Right eye
-			// 			fContext.stroke();
 		}
 	</script>
 	
@@ -83,15 +71,23 @@
 		<canvas id="f_canvas" width="960" height="640"></canvas>
 
 	</div>
+	
 	<hr/>
+	<div>
+		<audio id="audio_restart" src="audio/加一条命.mp3" preload="auto" hidden>浏览器不支持 audio </audio>
+		<audio id="audio_die" src="audio/死亡2.mp3" preload="auto" hidden>浏览器不支持 audio </audio>
+	</div>
 	
 	<div id="control_bar">
-		<div id="btn_debug">Debug</div>
-		<div id="btn_add_zombie" onclick="javascript:gm.addZombie();">Add</div>
-		<div id="btn_add_zombie" onclick="javascript:gm.clearZombie();">Clear</div>
-		<div id="btn_add_zombie" 
-			onclick="javascript:gm.inGame = gm.inGame == true ? false : true;">Pause</div>
-		<div id="btn_restart" onclick="javascript:gm.player.isLive = true;">Restart</div>
+		<button id="btn_debug">Debug</button>
+		<button id="btn_add_zombie" onclick="javascript:gm.addZombie();">Add</button>
+		<button id="btn_add_zombie" onclick="javascript:gm.clearZombie();">Clear</button>
+		<button id="btn_add_zombie" 
+			onclick="javascript:gm.inGame = gm.inGame == true ? false : true;">Pause</button>
+		<button id="btn_restart" onclick="javascript:gm.player.isLive = true;audioRestart.play();">Restart</button>
+		<div style="float:right;">
+			<audio controls src="audio/you_were_there.mp3" autoplay loop >浏览器不支持 audio </audio>
+		</div>
 	</div>
 </body>
 
