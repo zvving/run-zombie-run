@@ -221,7 +221,8 @@ var infoZombieList;
 var EYESHOT_ANGLE		= Math.PI / 3;
 var EYESHOT_RANGE		= 200;
 
-var DIR_STATE_K			= 150;
+var DIR_STATE_ZOMBIE_K	= 150;
+var DIR_STATE_PLAYER_K	= 300;
 var DIR_STATE_K_CENTER	= 1;
 var DIR_STATE_K_MATCH	= 0.8;
 var DIR_STATE_K_NEAR	= 1;
@@ -236,6 +237,9 @@ const DIR_STATE_NONE	= 0;
 
 const RADIUS_ZOMBIE		= 10;
 const RADIUS_PLAYER		= 15;
+
+const SPEED_ZOMBIE_DEFAULT	= 0.05;
+const SPEED_PLAYER_MAX		= 0.1;
 
 // var eventLoop = function () {
 // 	console.log("=== in eventLoop:" + gm.lo);

@@ -5,14 +5,15 @@ var Role = Class.extend({
 		this.y	= 320;
 		this.dir = 10000;
 		this.dirState = DIR_STATE_NONE;
-		this.v	= 0.05;
-		this.a	= 5;
+		this.dirStateK	= DIR_STATE_ZOMBIE_K;
+		this.v	= 0.0;
+		this.a	= 0;
     },
     eventLoop: function( time ) {
 		
 		//调整方向
 		if ( this.dirState != DIR_STATE_NONE ) {
-			this.dir += this.dirState * DIR_STATE_K;
+			this.dir += this.dirState * this.dirStateK;
 
 			//方向越界
 			this.dir = ( this.dir + 62832 ) % 62832;

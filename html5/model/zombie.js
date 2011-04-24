@@ -3,6 +3,8 @@ var Zombie = Role.extend({
     init: function(id) {
 		this._super(id);
 		this.radius = RADIUS_ZOMBIE;
+		this.v		= SPEED_ZOMBIE_DEFAULT;
+		this.dirStateK	= DIR_STATE_ZOMBIE_K;
 		
 		this.neighborList	= new Array();
 		this.centerPoint	= new Point();
@@ -128,7 +130,7 @@ var Zombie = Role.extend({
 	}
 });
 
-const HSLA_EYESHOT			= "hsla(0, 50%, 90%, 0.5)";
+const HSLA_EYESHOT			= "hsla(0, 50%, 90%, 0.2)";
 const HSLA_ZOMBIE_STROKE	= "hsla(0, 50%, 50%, 1)";
 const HSLA_ZOMBIE_FILL		= "hsla(60, 90%, 50%, 1)";
 const HSLA_DEBUG_CENTER_POINT	= "hsla(240, 50%, 50%, 0.5)";

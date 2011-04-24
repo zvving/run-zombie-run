@@ -6,8 +6,21 @@ var Player = Role.extend({
 		this.x = 200;
 		this.y = 200;
 		this.isLive = true;
+		this.dirStateK	= DIR_STATE_PLAYER_K;
+		this.a	= 0;
+		this.aState	= SPEED_KEEP;
+		
     },
 	eventLoop: function( time ) {
+		
+		if (this.aState != SPEED_KEEP) {
+			this.a = this.aState;
+			this.v += this.a * time/10000;
+			this.v = this.v<0 ? 0 : this.v;
+			this.v = this.v>SPEED_PLAYER_MAX ?
+				SPEED_PLAYER_MAX : this.v;
+		}
+		
 		this._super(time);
 	},
 
@@ -29,6 +42,10 @@ var Player = Role.extend({
 const HSLA_PLAYER_STROKE	= "hsla(60, 50%, 50%, 1)";
 const HSLA_PLAYER_FILL		= "hsla(180, 50%, 50%, 0.4)";
 
+const SPEED_UP				= 1;
+const SPEED_DOWN			= -1;
+const SPEED_KEEP			= 0;
+
 
 document.onkeydown = function( event ) {
 	
@@ -37,11 +54,13 @@ document.onkeydown = function( event ) {
 			gm.player.dirState = DIR_STATE_LEFT;
 			break;
 		case 38://up
+			gm.player.aState	= SPEED_UP;
 			break;
 		case 39://right
 			gm.player.dirState = DIR_STATE_RIGHT;
 			break;
 		case 40://down
+			gm.player.aState	= SPEED_DOWN;
 			break;
 		default:
 			break;
@@ -58,6 +77,9 @@ document.onkeyup = function( event ) {
 			}
 			break;
 		case 38://up
+			if (gm.player.aState == SPEED_UP) {
+				gm.player.aState = SPEED_KEEP;
+			}
 			break;
 		case 39://right
 			if (gm.player.dirState == DIR_STATE_RIGHT) {
@@ -65,6 +87,9 @@ document.onkeyup = function( event ) {
 			}
 			break;
 		case 40://down
+			if (gm.player.aState == SPEED_DOWN) {
+				gm.player.aState = SPEED_KEEP;
+			}
 			break;
 		//control
 		case 65://a
