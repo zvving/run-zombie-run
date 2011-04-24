@@ -39,6 +39,7 @@
 	
 		function f() {
 			var fCanvas = document.getElementById("f_canvas");
+			globalCompositeOperation = "copy";
 			
 			infoFps		= document.getElementById("fps");
 			infoFTime	= document.getElementById("fps_time");
@@ -85,7 +86,7 @@
 	</div>
 	
 	<div id="control_bar">
-		<button  id="btn_debug" onclick="javascript:gm.debug();">Debug</button>
+		<button  id="btn_debug" onclick="javascript:gm.toggleDebug();">Debug</button>
 		<button id="btn_add_zombie" onclick="javascript:gm.addZombie();">Add</button>
 		<button id="btn_add_zombie" onclick="javascript:gm.clearZombie();">Clear</button>
 		<button id="btn_add_zombie" 

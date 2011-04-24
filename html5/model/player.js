@@ -12,18 +12,23 @@ var Player = Role.extend({
 	},
 
 	drawLoop: function () {
+		cx.strokeStyle = HSLA_PLAYER_STROKE;
+		cx.fillStyle = HSLA_PLAYER_FILL;
 		
 		cx.beginPath();
-		cx.strokeStyle = "hsla(60, 50%, 50%, 1)";
-		cx.fillStyle = "hsla(180, 50%, 50%, 0.4)";
 		cx.arc(this.x, this.y,
 			 this.radius, this.dir/10000, this.dir/10000+Math.PI*2);
 		cx.lineTo(this.x, this.y);
-		cx.stroke();
-		cx.fill();
 		cx.closePath();
+		
+		cx.fill();
+		cx.stroke();
 	}
 });
+
+const HSLA_PLAYER_STROKE	= "hsla(60, 50%, 50%, 1)";
+const HSLA_PLAYER_FILL		= "hsla(180, 50%, 50%, 0.4)";
+
 
 document.onkeydown = function( event ) {
 	
@@ -69,7 +74,7 @@ document.onkeyup = function( event ) {
 			gm.clearZombie();
 			break;
 		case 68://d
-			gm.debug();
+			gm.toggleDebug();
 			break;
 		case 80://p
 			gm.pause();

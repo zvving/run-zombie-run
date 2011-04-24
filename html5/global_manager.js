@@ -5,6 +5,7 @@ var GlobalManager = Class.extend({
 		this.player		= new Player();
 		log.log("=== GlobalManager init..." );
 		this.inGame = true;
+		this.isDebug	= false;
 
     },
     start: function() {
@@ -86,10 +87,52 @@ var GlobalManager = Class.extend({
 		cx.clearRect(0, 0, 960, 640);
 		cx.save();
 		
-		//绘制 zombie 
+		
+		// 绘制 zombie 视野
+		//cx.beginPath();
 		for ( i = 0; i<gm.zombieList.length; i++ ) {
-			gm.zombieList[i].drawLoop();
+			gm.zombieList[i].drawLoopEyeshot();
 		}
+		
+		//cx.closePath();
+		
+		//绘制 zombie 身体
+		cx.strokeStyle = HSLA_ZOMBIE_STROKE;
+		cx.fillStyle = HSLA_ZOMBIE_FILL;
+		cx.beginPath();
+		for ( i = 0; i<gm.zombieList.length; i++ ) {
+			//gm.zombieList[i].drawLoop();
+			gm.zombieList[i].drawLoopBody();
+		}
+		cx.closePath();
+		cx.fill();
+		cx.stroke();
+		
+		
+		
+		if ( gm.isDebug ) {
+			//绘制 dembie debug
+			cx.strokeStyle = HSLA_DEBUG_CENTER_POINT;
+			cx.beginPath();
+			for ( i = 0; i<gm.zombieList.length; i++ ) {
+				gm.zombieList[i].drawLoopDebugCenter();
+			}
+			cx.closePath();
+			cx.stroke();
+
+			cx.strokeStyle = HSLA_DEBUG_MATCH_DIR;
+			cx.beginPath();
+			for ( i = 0; i<gm.zombieList.length; i++ ) {
+				gm.zombieList[i].drawLoopDebugDir();
+			}
+			cx.closePath();
+			cx.stroke();
+		}
+
+		
+		//
+		
+		
 		
 		//绘制 player
 		if ( gm.player.isLive == true ) {
@@ -148,8 +191,10 @@ var GlobalManager = Class.extend({
 		audioPu.load();
 		audioPu.play();
 	},
-	debug: function() {
-		
+	toggleDebug: function() {
+		this.isDebug = this.isDebug ? false : true;
+		audioPu.load();
+		audioPu.play();
 	}
 });
 

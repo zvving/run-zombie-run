@@ -79,25 +79,18 @@ var Zombie = Role.extend({
 	},
 	drawLoop: function () {
 		//画视野
-		
 		cx.beginPath();
-		cx.fillStyle = "hsla(0, 50%, 50%, 0.1)";
+		cx.fillStyle = HSLA_EYESHOT;
 		cx.moveTo(this.x, this.y);
 		cx.arc(this.x, this.y, this.radius + EYESHOT_RANGE, this.dir/10000 + EYESHOT_ANGLE, this.dir/10000 - EYESHOT_ANGLE, true );
 		cx.fill();
 		cx.closePath();
 		
 		//连线中央聚集点
-		cx.beginPath();
-		cx.strokeStyle = "hsla(240, 50%, 50%, 0.5)";
-		cx.moveTo(this.x, this.y);
-		cx.lineTo(this.centerPoint.x ,this.centerPoint.y);
-		cx.stroke();
-		cx.closePath();
 		
 		
 		cx.beginPath();
-		cx.strokeStyle = "hsla(120, 50%, 50%, 0.5)";
+		
 		cx.moveTo(this.x, this.y);
 		cx.lineTo( Math.cos(this.matchDir/10000)*50 + this.x,
 			Math.sin(this.matchDir/10000)*50 + this.y );
@@ -105,17 +98,41 @@ var Zombie = Role.extend({
 		cx.closePath();
 		
 		
+
+	},
+	drawLoopEyeshot: function() {
 		cx.beginPath();
-		cx.strokeStyle = "hsla(0, 50%, 50%, 1)";
-		cx.fillStyle = "hsla(0, 50%, 50%, 0.4)";
-		cx.arc(this.x, this.y,
-			 this.radius, this.dir/10000, this.dir/10000+Math.PI*2);
-		cx.lineTo(this.x, this.y);
-		cx.stroke();
+		cx.fillStyle = HSLA_EYESHOT;
+		cx.moveTo(this.x, this.y);
+		cx.arc(this.x, this.y, this.radius + EYESHOT_RANGE, this.dir/10000 + EYESHOT_ANGLE, this.dir/10000 - EYESHOT_ANGLE, true );
 		cx.fill();
 		cx.closePath();
+	},
+	drawLoopBody: function() {
+		cx.moveTo(this.x, this.y);
+		cx.arc(this.x, this.y, this.radius, 
+			this.dir/10000, this.dir/10000+Math.PI*2);
+		cx.lineTo(this.x, this.y);
+	},
+	drawLoopDebugCenter: function() {
+		//绘制 临近 zombie 中央点 连线
+		cx.moveTo(this.x, this.y);
+		cx.lineTo(this.centerPoint.x ,this.centerPoint.y);
+
+	},
+	drawLoopDebugDir: function() {
+		//绘制 临近 zombie 方向匹配线
+		cx.moveTo(this.x, this.y);
+		cx.lineTo( Math.cos(this.matchDir/10000)*50 + this.x,
+			Math.sin(this.matchDir/10000)*50 + this.y );
 	}
 });
+
+const HSLA_EYESHOT			= "hsla(0, 50%, 90%, 0.5)";
+const HSLA_ZOMBIE_STROKE	= "hsla(0, 50%, 50%, 1)";
+const HSLA_ZOMBIE_FILL		= "hsla(60, 90%, 50%, 1)";
+const HSLA_DEBUG_CENTER_POINT	= "hsla(240, 50%, 50%, 0.5)";
+const HSLA_DEBUG_MATCH_DIR	= "hsla(120, 50%, 50%, 0.5)";
 
 var tmp_zombie_nx;
 var tmp_zombie_ny;
