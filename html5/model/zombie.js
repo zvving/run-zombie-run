@@ -14,6 +14,8 @@ var Zombie = Role.extend({
 		this.centerPoint.y	= this.y;
 		this.centerPoint.dir = this.dir;
 		this.nearZombie		= null;
+		this.emotion		= EMO_SEARCH;
+		this.aim			= null;
 		
     },
     getY: function() {
@@ -30,13 +32,16 @@ var Zombie = Role.extend({
 		//初始化 
 		this.centerPoint.x	= this.x;
 		this.centerPoint.y	= this.y;
-		this.matchDir		= this.dir;
+		this.centerPoint.dir	= this.dir;
+		
+		if ( this.aim != null ) {
+			this.thisTurnToRole(this.aim, 1, DIR_STATE_K_NEAR);
+			return;
+		}
 		
 		//避免拥挤 boids 1
 		if ( this.nearZombie != null ) {
-			
-			this.dirState = - dirTurnToPoint (this.dir, this.x, this.y,
-				this.nearZombie.x, this.nearZombie.y ) * DIR_STATE_K_NEAR;
+			this.thisTurnToRole(this.nearZombie, -1, DIR_STATE_K_NEAR);
 			return;
 		}
 		
@@ -53,7 +58,7 @@ var Zombie = Role.extend({
 		tmp_zombie_nk = dirTurnToPoint (this.dir, this.x, this.y,
 			this.centerPoint.x, this.centerPoint.y );
 		
-		this.dirState = 0;
+		this.dirState = DIR_STATE_NONE;
 		
 		this.dirState += tmp_zombie_nk*DIR_STATE_K_CENTER;
 		//方向趋同 boids 3 
@@ -63,6 +68,11 @@ var Zombie = Role.extend({
 		
 		
 	},
+	thisTurnToRole: function ( role, closeOrNo, k ) {
+		this.dirState = closeOrNo * dirTurnToPoint (this.dir, this.x, this.y,
+			role.x, role.y ) * k;
+	},
+	
 	drawLoop: function () {
 		//画视野
 		cx.beginPath();
@@ -111,6 +121,10 @@ var Zombie = Role.extend({
 		cx.moveTo(this.x, this.y);
 		cx.lineTo( Math.cos(this.centerPoint.dir/10000)*50 + this.x,
 			Math.sin(this.centerPoint.dir/10000)*50 + this.y );
+	},
+	findingAim: function ( player ) {
+		this.aim = player;
+		this.emotion = EMO_FOUND;
 	}
 });
 

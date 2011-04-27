@@ -46,15 +46,15 @@ var GlobalManager = Class.extend({
 		/** 运行 event loop */
     execEventLoop: function(lostTime) {
 				
-				/** zombie 矩阵查找过程 初始化 */
+		/** zombie 矩阵查找过程 初始化 */
         for (i = 0; i < this.zombieList.length; i++) {
             this.zombieList[i].neighborList.length = 0;
-            this.zombieList[i].nearZombie = null;
-						
-						//如果这个僵尸碰到 zombie, player 就挂掉啦
-            if (this.player.isLive && (distance(this.player, this.zombieList[i]) < RADIUS_ZOMBIE + RADIUS_PLAYER)) {
-                this.ohDie();
-            }
+            this.zombieList[i].nearZombie	= null;
+			this.zombieList[i].aim			= null;
+			
+			if ( this.player.isLive ) {
+				this.playerWithZombie( this.zombieList[i] );
+			}
         }
 
 				/** 计算临近僵尸和近距离僵尸 */
@@ -86,6 +86,23 @@ var GlobalManager = Class.extend({
         }
 
     },
+
+	playerWithZombie: function( zombie ){
+		
+		var theDist = distance(this.player, zombie);
+		
+		if ( theDist < EYESHOT_RANGE ) {
+			//TODO 判断 eyeshot angle
+			zombie.findingAim( this.player );
+		}
+		
+		
+		//如果这个僵尸碰到 zombie, player 就挂掉啦
+		if ( theDist 
+			< RADIUS_ZOMBIE + RADIUS_PLAYER ) {
+				this.ohDie();
+		}
+	},
 
     drawLoop: function() {
         fpsNewTime = new Date().getTime();

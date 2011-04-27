@@ -39,3 +39,9 @@ const RADIUS_PLAYER		= 15;
 
 const SPEED_ZOMBIE_DEFAULT	= 0.05;
 const SPEED_PLAYER_MAX		= 0.1;
+
+//僵尸 emotion
+const EMO_SEARCH	= 0;
+const EMO_FOUND		= 1;
+const EMO_FOLLOW	= 2;
+const EMO_ACCACK	= 3;
