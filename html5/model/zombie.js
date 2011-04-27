@@ -1,3 +1,5 @@
+/** 僵尸类，继承自 Role */
+
 var Zombie = Role.extend({
     // init是构造函数
     init: function(id) {

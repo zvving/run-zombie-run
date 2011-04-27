@@ -1,3 +1,5 @@
+/** Player 及 Zombie 的基类 */
+
 var Role = Class.extend({
     init: function(id) {
 		this.id	= id;

@@ -1,3 +1,5 @@
+/** 玩家类，继承自 role */
+
 var Player = Role.extend({
     // init是构造函数
     init: function(id) {

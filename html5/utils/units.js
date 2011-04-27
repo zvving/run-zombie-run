@@ -1,3 +1,6 @@
+/** 常用函数类 */
+
+// count two points distance
 var distance = function ( z1, z2 ) {
 	tmp_unit_zx = z1.x-z2.x;
 	tmp_unit_zy = z1.y-z2.y;

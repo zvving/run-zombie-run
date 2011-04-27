@@ -1,4 +1,6 @@
-//日志类， 为log添加时间戳
+/** 日志类， 为log添加时间戳
+ */
+
 var Log = Class.extend({
     // init是构造函数
     init: function() {
