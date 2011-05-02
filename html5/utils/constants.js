@@ -17,14 +17,18 @@ var infoCps;
 var infoCTime;
 var infoZombieList;
 
-var EYESHOT_ANGLE		= Math.PI / 3;
-var EYESHOT_RANGE		= 200;
+const FPS_TIME			= 20;
+const CPS_TIME			= 40;
 
-var DIR_STATE_ZOMBIE_K	= 150;
-var DIR_STATE_PLAYER_K	= 300;
-var DIR_STATE_K_CENTER	= 1;
-var DIR_STATE_K_MATCH	= 0.8;
-var DIR_STATE_K_NEAR	= 1;
+const EYESHOT_ANGLE		= Math.PI / 3;
+const EYESHOT_RANGE		= 200;
+const NEAR_RANGE		= 40;
+
+const DIR_STATE_ZOMBIE_K	= 150;
+const DIR_STATE_PLAYER_K	= 500;
+const DIR_STATE_K_CENTER	= 1;
+const DIR_STATE_K_MATCH		= 0.8;
+const DIR_STATE_K_NEAR		= 1;
 
 
 const VIEW_WIDTH		= 960;
@@ -45,3 +49,11 @@ const EMO_SEARCH	= 0;
 const EMO_FOUND		= 1;
 const EMO_FOLLOW	= 2;
 const EMO_ACCACK	= 3;
+
+const HSLA_EYESHOT			= "hsla(0, 50%, 90%, 0.2)";
+const HSLA_ZOMBIE_STROKE	= "hsla(0, 50%, 50%, 1)";
+const HSLA_ZOMBIE_FILL		= "hsla(60, 90%, 50%, 1)";
+const HSLA_DEBUG_CENTER_POINT	= "hsla(240, 50%, 50%, 0.5)";
+const HSLA_DEBUG_MATCH_DIR	= "hsla(120, 50%, 50%, 0.5)";
+
+const HSLA_DEBUG_AIM_DIR	= "hsla(0, 50%, 50%, 0.2)";

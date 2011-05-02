@@ -15,8 +15,8 @@ var GlobalManager = Class.extend({
         log.log("=== game start...");
         
         /** 建立事件循环和绘图循环 */
-        this.eventIntervalId = setInterval(this.eventLoop, 20);
-        this.drawIntervalId = setInterval(this.drawLoop, 20);
+        this.eventIntervalId = setInterval(this.eventLoop, CPS_TIME);
+        this.drawIntervalId = setInterval(this.drawLoop, FPS_TIME);
 
     },
 
@@ -43,9 +43,8 @@ var GlobalManager = Class.extend({
 
         cpsLastTime = cpsNewTime;
     },
-		/** 运行 event loop */
+	/** 运行 event loop */
     execEventLoop: function(lostTime) {
-				
 		/** zombie 矩阵查找过程 初始化 */
         for (i = 0; i < this.zombieList.length; i++) {
             this.zombieList[i].neighborList.length = 0;
@@ -64,7 +63,7 @@ var GlobalManager = Class.extend({
                 if (tmp_manager_distance < EYESHOT_RANGE) {
                     this.zombieList[i].neighborList.push(this.zombieList[j]);
                     this.zombieList[j].neighborList.push(this.zombieList[i]);
-                    if (tmp_manager_distance < EYESHOT_RANGE / 4) {
+                    if (tmp_manager_distance < NEAR_RANGE) {
                         if (this.nearZombie == null || tmp_manager_distance < distance(this.zombieList[i], this.nearZombie)) {
                             this.zombieList[i].nearZombie = this.zombieList[j];
                             this.zombieList[j].nearZombie = this.zombieList[i];
@@ -107,52 +106,7 @@ var GlobalManager = Class.extend({
     drawLoop: function() {
         fpsNewTime = new Date().getTime();
 
-        cx.clearRect(0, 0, 960, 640);
-        cx.save();
-
-        // 绘制 zombie 视野
-        for (i = 0; i < gm.zombieList.length; i++) {
-            gm.zombieList[i].drawLoopEyeshot();
-        }
-
-        //绘制 zombie 身体
-        cx.strokeStyle = HSLA_ZOMBIE_STROKE;
-        cx.fillStyle = HSLA_ZOMBIE_FILL;
-        cx.beginPath();
-        for (i = 0; i < gm.zombieList.length; i++) {
-            //gm.zombieList[i].drawLoop();
-            gm.zombieList[i].drawLoopBody();
-        }
-        cx.closePath();
-        cx.fill();
-        cx.stroke();
-
-        if (gm.isDebug) {
-            //绘制 dembie debug
-            cx.strokeStyle = HSLA_DEBUG_CENTER_POINT;
-            cx.beginPath();
-            for (i = 0; i < gm.zombieList.length; i++) {
-                gm.zombieList[i].drawLoopDebugCenter();
-            }
-            cx.closePath();
-            cx.stroke();
-
-            cx.strokeStyle = HSLA_DEBUG_MATCH_DIR;
-            cx.beginPath();
-            for (i = 0; i < gm.zombieList.length; i++) {
-                gm.zombieList[i].drawLoopDebugDir();
-            }
-            cx.closePath();
-            cx.stroke();
-        }
-
-        //
-        //绘制 player
-        if (gm.player.isLive == true) {
-            gm.player.drawLoop();
-        }
-
-        cx.restore();
+  		gm.execDrawLoop();
 
         //计算绘图循环帧率
         if (fpsNewTime - fpsSecondTime >= 1000) {
@@ -165,6 +119,66 @@ var GlobalManager = Class.extend({
         infoFTime.innerText = new Date().getTime() - fpsNewTime;
         fpsLastTime = fpsNewTime;
     },
+	execDrawLoop: function() {
+		cx.clearRect(0, 0, 960, 640);
+        cx.save();
+        // 绘制 zombie 视野
+        for (i = 0; i < this.zombieList.length; i++) {
+            this.zombieList[i].drawLoopEyeshot();
+        }
+
+        //绘制 zombie 身体
+        cx.strokeStyle = HSLA_ZOMBIE_STROKE;
+        cx.fillStyle = HSLA_ZOMBIE_FILL;
+        cx.beginPath();
+        for (i = 0; i < this.zombieList.length; i++) {
+            //this.zombieList[i].drawLoop();
+            this.zombieList[i].drawLoopBody();
+        }
+        cx.closePath();
+        cx.fill();
+        cx.stroke();
+
+        if (this.isDebug) {
+            //绘制 dembie debug
+            cx.strokeStyle = HSLA_DEBUG_CENTER_POINT;
+            cx.beginPath();
+            for (i = 0; i < this.zombieList.length; i++) {
+                this.zombieList[i].drawLoopDebugCenter();
+            }
+            cx.closePath();
+            cx.stroke();
+
+            cx.strokeStyle = HSLA_DEBUG_MATCH_DIR;
+            cx.beginPath();
+            for (i = 0; i < this.zombieList.length; i++) {
+				if (this.zombieList[i].centerPoint.dir != this.zombieList[i].dir) {
+					this.zombieList[i].drawLoopDebugDir();
+				}
+            }
+            cx.closePath();
+            cx.stroke();
+
+			cx.strokeStyle = HSLA_DEBUG_AIM_DIR;
+            cx.beginPath();
+            for (i = 0; i < this.zombieList.length; i++) {
+				if (this.zombieList[i].aim != null) {
+					this.zombieList[i].drawLoopDebugAim();
+				}
+            }
+            cx.closePath();
+            cx.stroke();
+
+        }
+
+        //
+        //绘制 player
+        if (this.player.isLive == true) {
+            this.player.drawLoop();
+        }
+
+        cx.restore();
+	},
 
     end: function() {
         log.log("=== game end...");

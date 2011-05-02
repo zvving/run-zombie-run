@@ -34,16 +34,19 @@ var Zombie = Role.extend({
 		this.centerPoint.y	= this.y;
 		this.centerPoint.dir	= this.dir;
 		
-		if ( this.aim != null ) {
-			this.thisTurnToRole(this.aim, 1, DIR_STATE_K_NEAR);
-			return;
-		}
 		
 		//避免拥挤 boids 1
 		if ( this.nearZombie != null ) {
 			this.thisTurnToRole(this.nearZombie, -1, DIR_STATE_K_NEAR);
 			return;
 		}
+		
+		if ( this.aim != null ) {
+			this.thisTurnToRole(this.aim, 1, DIR_STATE_K_NEAR*2);
+			return;
+		}
+		
+
 		
 		//周围没有僵尸,继续前行~
 		if ( this.neighborList.length == 0 ) {
@@ -122,17 +125,17 @@ var Zombie = Role.extend({
 		cx.lineTo( Math.cos(this.centerPoint.dir/10000)*50 + this.x,
 			Math.sin(this.centerPoint.dir/10000)*50 + this.y );
 	},
+	drawLoopDebugAim: function() {
+		cx.moveTo(this.x, this.y);
+		cx.lineTo( this.aim.x, this.aim.y );
+	},
 	findingAim: function ( player ) {
 		this.aim = player;
 		this.emotion = EMO_FOUND;
 	}
 });
 
-const HSLA_EYESHOT			= "hsla(0, 50%, 90%, 0.2)";
-const HSLA_ZOMBIE_STROKE	= "hsla(0, 50%, 50%, 1)";
-const HSLA_ZOMBIE_FILL		= "hsla(60, 90%, 50%, 1)";
-const HSLA_DEBUG_CENTER_POINT	= "hsla(240, 50%, 50%, 0.5)";
-const HSLA_DEBUG_MATCH_DIR	= "hsla(120, 50%, 50%, 0.5)";
+
 
 
 var tmp_zombie_nk;
