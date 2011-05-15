@@ -1,24 +1,137 @@
+* { /* Use the star character as a 'wild-card' selector to remove default features */
+	text-decoration: none; /* Remove border around linked images */
+	margin: 0px;/* Remove margins and padding on everything- you want them back, you ask for it! */
+	padding: 0px;
+}
+/* THE HOLLY HACK, use for absolute positioned elements inside relative ancestors in anything below IE7/Win- the odd end-bracket on this comment hides the hack from IE Mac \*/
+* html {
+height: 1px;
+}
+/* end of hacks ___________________________________________________________________________________*/
 body {
-	width: auto;
-	height: auto;
+	height:100%; /* essential to get 100% height divs in XHTML Trans! */
+	width:100%;
+/*	min-width: 600px;*/
 }
-
-#ibody {
+#vertical_centering_div {
+	position: absolute;
+	left:0px;
+	top:0px;
+	width:100%;
+	height:100%;
+	border:2px solid #FF6600;
+}
+#centering_table {
+	background-color: fuchsia;
+	height: 100%;
+	width: 100%;
+	border: 2px dashed #00CCFF;
+	text-align: center;
+}
+#content_div {
+	height: 40%;
 	background-color: aqua;
-	min-width: 768px;
-	max-width: 1024px;
-	min-height: 768px;
-	max-height: 1024px;
-	width: auto;
-	height: auto;
-	margin: auto;
+	border: 2px dashed #00FF99;
 }
 
-#dir_div {
-	background: blue;
-	width: 100px;
-	height: 100px;
-	margin-bottom: 0;
-	left: 0;
-	bottom: 0;
+#content_top {
+	height: 40%;
+	background-color: green;
 }
+
+#content_bottom {
+	height: 20%;
+	background-color: lime;
+}
+
+#content_bottom_top {
+	width: 100%;
+	height: 80px;
+}
+
+#dir_bar {
+	float: left; 
+	background-color: navy;
+	width: 240px;
+	height: 240px;
+}
+
+#abc_bar {
+	float: right;
+	margin-right: 20px;
+	background-color: navy;
+	width: 240px;
+	height: 240px;
+	-webkit-transform: rotate(-20deg);
+	transform: rotate(-20deg);
+}
+
+.up_btn {
+	background-color: red;
+	width: 100%;
+	height: 50%;
+}
+
+.down_btn {
+	background-color: silver;
+	width: 100%;
+	height: 50%;
+}
+
+.x_btn {
+	float: left;
+	background-color: yellow;
+	width: 50%;
+	height: 120px;
+}
+.y_btn {
+	float: left;
+	background-color: silver;
+	width: 50%;
+	height: 120px;
+}
+.a_btn {
+	float: left;
+	background-color: purple;
+	width: 50%;
+	height: 120px;
+}
+.b_btn {
+	float: left;
+	background-color: olive;
+	width: 50%;
+	height: 120px;
+}
+
+.doWhite {
+	background-color: white;
+}
+
+span.f_btn {
+	position: relative;
+	background-color: teal;
+	color: white;
+	line-height: 32px;
+	font-size: 32px;
+	padding: 5px 10px;
+}
+
+span.f_btn:active{
+	background-color: white;
+	color: black;
+	position:relative;
+	top:3px;
+}
+
+
+
+#debug {
+	width: 360px;
+	height: 240px;
+	background-color: yellow;
+	text-align: left;
+	margin: auto;
+	list-style: none;
+	overflow: auto;
+}
+

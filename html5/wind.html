@@ -1,57 +1,76 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
     <head>
-        <meta name="generator" content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.3.6), see www.w3.org" />
+        <meta id="viewport" name="viewport" content="width=768; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>
             wind
         </title>
-        
         <link href="style/wind.css" rel="stylesheet" type="text/css" />
         
-        <script src='js/swfobject.js' type="text/javascript">
-</script>
-        <script src='js/FABridge.js' type="text/javascript">
-</script>
-        <script src='js/web_socket.js' type="text/javascript">
-</script>
-        <script type="text/javascript">
-//<![CDATA[
-        var ws;
-
-        function init() {
-            function debug(string) {
-              var element = document.getElementById("debug");
-              var p = document.createElement("p");
-              p.appendChild(document.createTextNode(string));
-              element.appendChild(p);
-            }
-
-            ws = new WebSocket("ws://localhost:3005/");
-            ws.onmessage = function(evt) { debug("Message: " + evt.data); };
-            ws.onclose = function() { debug("socket closed"); };
-            ws.onopen = function() {
-              debug("connected...");
-              ws.send("controller");
-            };
-          };
-
-        function sendMsg( msg ) {
-            ws.send( msg );
-        }
-        //]]>
-        </script>
+        <script src="js/lib/jquery-1.6.js" type="text/javascript"></script>
+        
+        <script src='js/lib/swfobject.js' type="text/javascript"></script>
+        <script src='js/lib/FABridge.js' type="text/javascript"></script>
+        <script src='js/lib/web_socket.js' type="text/javascript"></script>
+		
+		<script src="js/controller/wind.js" type="text/javascript"></script>
+		
+		<script src="js/controller/controller.js" type="text/javascript"></script>
+		
     </head>
     <body onload="init();">
-    	<div id="ibody">
-    		<div id="dir_div"></div>
-    	</div>
-        <div id="debug"></div>
-        <hr />	
-        <form>
-            <input type="button" name="send_msg_btn" value="send" onclick="javascript:sendMsg('hello kitty...');" />
-        </form>
+        <div id="vertical_centering_div">
+            <!-- this container div is required in XHTML Trans documents or the table won't center vertically. -->
+            <table id="centering_table">
+                <!-- we put the content in a table so it won't go off the top & left edges when the window's resized. -->
+                <tbody>
+                    <tr>
+                        <td>
+                            <div id="content_top">
+                                <ul id="debug" style="display:none;"></ul>
+                            </div>
+                            <div id="content_div">
+                                <!-- This div will hold all your centered content -->
+                                <div id="dir_bar">
+                                    <div id="up_btn" class="up_btn">
+                                        加速
+                                    </div>
+ 
+                                    <div id="down_btn" class="down_btn">
+                                        减速
+                                    </div>
+                                </div>
+                                <div id="abc_bar">
+                                    <div id="x_btn" onclick="debug("fdsf");" class="x_btn">
+                                        x
+                                    </div>
+                                    <div id="y_btn" class="y_btn">
+                                        y
+                                    </div>
+                                    <div id="a_btn" class="a_btn">
+                                        a
+                                    </div>
+                                    <div id="b_btn" class="b_btn">
+                                        b
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="content_bottom">
+                            	<div id="content_bottom_top"></div>
+								<span id="f1_btn" class="f_btn">Pause</span>
+								<span id="f2_btn" class="f_btn">Restart</span>
+								<span id="f3_btn" class="f_btn">Add</span>
+								<span id="f4_btn" class="f_btn">Clear</span>
+								<span id="f5_btn" class="f_btn">Debug</span>
+								<span id="f6_btn" class="f_btn">f6</span>
+                                <span id="debug_btn" class="f_btn">local info</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
 

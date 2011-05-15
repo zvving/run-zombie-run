@@ -1,104 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>fly... fly...</title>
-	
-	<link href="style/all.css" rel="stylesheet" type="text/css"/>
-	
-	
-	<script src="utils/john_oo.js" type="text/javascript" charset="utf-8"></script>
-	<script src="utils/log.js" type="text/javascript" charset="utf-8"></script>
-	<script src="utils/units.js" type="text/javascript" charset="utf-8"></script>
-	<script src="utils/constants.js" type="text/javascript" charset="utf-8"></script>
-	
-	<script src="model/role.js" type="text/javascript" charset="utf-8"></script>
-	<script src="model/zombie.js" type="text/javascript" charset="utf-8"></script>
-	<script src="model/player.js" type="text/javascript" charset="utf-8"></script>
-	
-	<script src="global_manager.js" type="text/javascript" charset="utf-8"></script>
-	
-	
-	
-	<script src="fly.js" type="text/javascript" charset="utf-8"></script>
-	
-	
-	<script type="text/javascript" charset="utf-8">
-	
-		var gm = new GlobalManager();
-		var cx;
-		
-		var infoFps;
-		var infoFTime;
-		var infoCps;
-		var infoCTime;
-		var infoZombieList;
-		var audioRestart;
-		var audioDie;
-		var audioPu;
-		
-	
-		function f() {
-			var fCanvas = document.getElementById("f_canvas");
-			globalCompositeOperation = "copy";
-			
-			infoFps		= document.getElementById("fps");
-			infoFTime	= document.getElementById("fps_time");
-			infoCps		= document.getElementById("cps");
-			infoCTime	= document.getElementById("cps_time");
-			infoZombieList	= document.getElementById("zombie_list_number");
-			
-			audioRestart = document.getElementById("audio_restart");
-			audioDie = document.getElementById("audio_die");
-			audioPu = document.getElementById("audio_pu");
-			
-			cx = fCanvas.getContext("2d");
-			
-			gm.start();
-			
-			for (i=0; i<20; i++) {
-				gm.addZombie();
-			}
-		}
-	</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Untitled Document</title>
 </head>
 
-<body onload="f();">
-
-	<div id="info_bar">
-		FPS:<span id="fps"></span>
-		FTime:<span id="fps_time"></span>
-		CPS:<span id="cps"></span>
-		CTime:<span id="cps_time"></span>
-		list:<span id="zombie_list_number"></span>
-	</div>
-
-	<hr/>
-	
-	<div id="canvas_div">
-		<canvas id="f_canvas" width="960" height="640" style="border: 1px solid black;"></canvas>
-
-	</div>
-	
-	<div>
-		<audio id="audio_restart" src="audio/加一条命.mp3" preload="auto" hidden>浏览器不支持 audio </audio>
-		<audio id="audio_die" src="audio/死亡2.mp3" preload="auto" hidden>浏览器不支持 audio </audio>
-		<audio id="audio_pu" src="audio/火球或壳击敌人.mp3" preload="auto" hidden>浏览器不支持 audio </audio>
-	</div>
-	
-	<div id="control_bar">
-		<button  id="btn_debug" onclick="javascript:gm.toggleDebug();">Debug</button>
-		<button id="btn_add_zombie" onclick="javascript:gm.addZombie();">Add</button>
-		<button id="btn_add_zombie" onclick="javascript:gm.clearZombie();">Clear</button>
-		<button id="btn_add_zombie" 
-			onclick="javascript:gm.pause();">Pause</button>
-		<button id="btn_restart" onclick="javascript:gm.restart();">Restart</button>
-		<div style="float:right;">
-			<audio controls src="audio/you_were_there.mp3" loop >浏览器不支持 audio </audio>
-		</div>
-	</div>
-	<hr/>
-	开源作品，项目托管在 <a href="https://github.com/merlyle/run-zombie-run" rel="github">GitHub</a> ，作者邮箱 <a href="mailto://merlyle@gmail.com">merlyle@gmail.com</a>
+<body>
+	index
 </body>
 
 </html>
