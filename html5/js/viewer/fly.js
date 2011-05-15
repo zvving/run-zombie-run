@@ -63,6 +63,7 @@ function handleCtlMsg( msgS ) {
 		case "B":
 		break;
 		case "F1":
+			$("#btn_add_zombie").trigger('click')
 			gm.pause()
 		break;
 		case "F2":

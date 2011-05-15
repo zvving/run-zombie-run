@@ -1,5 +1,3 @@
-var ws;
-var ctrlId = "0"
 
 
 var dUpBtn;
@@ -26,9 +24,6 @@ var ax = 0;
 var ay = 0;
 var az = 0;
 
-var delay = 10;
-var vMultiplier = 0.01;
-
 
 var dir = 0;
 
@@ -36,6 +31,16 @@ var dir = 0;
 
 
 $(function() {
+	var chatBtn = document.getElementById("chat_btn")
+	chatBtn.addEventListener("touchstart", function(e) {
+		var msg = $("#chat_input").val();
+		if ( msg != "") {
+			$("#chat_input").val("")
+			wsend("msg" + msg)
+		}
+	}, false)
+	
+	
 	
 	//控制按钮行为注册
 	dUpBtn = document.getElementById("up_btn");
@@ -127,6 +132,10 @@ $(function() {
 		toggleDebug();
 	}, false)
 	
+	document.getElementById("chat_display_btn").addEventListener("touchstart", function(e) {
+		toggleChat();
+	}, false)
+	
 	
 	//屏蔽 mobile 默认行为
 	document.addEventListener("touchstart", shieldDefault, false );
@@ -147,8 +156,7 @@ $(function() {
 	
 	
 	if (window.DeviceMotionEvent==undefined) {
-		document.getElementById("no").style.display="block";
-		document.getElementById("yes").style.display="none";
+		debug("The brower can't use devicemotion.")
 
 	} else {
 		window.ondevicemotion = function(event) {
@@ -157,30 +165,37 @@ $(function() {
 			az = event.accelerationIncludingGravity.z;
 		}
 
-		setInterval(function() {
-			if ( ax < -1 ) {
-				if ( dir != -1 ) {
-					dir = -1;
-					wsend("ctlDirLeft")
-				}
-			}
-			else if ( ax > 1 ) {
-				if ( dir != 1 ) {
-					dir = 1;
-					wsend("ctlDirRight")
-				}
-			}
-			else {
-				if (dir != 0) {
-					dir = 0;
-					wsend("ctlDirNone")
-				}
-			}
-			// debug("x:" + ax.toString().substr(0,4) + ",y:" + ay.toString().substr(0,4) 
-			// 				+ ",z:" + az.toString().substr(0,4) );
-		}, delay);
+		
+		setTimeout( function() {
+			setInterval(dirStatusUpadte, 10);
+		},1000);
 	}
 });
+
+
+
+function dirStatusUpadte() {
+	if ( ax < -1 ) {
+		if ( dir != -1 ) {
+			dir = -1;
+			wsend("ctlDirLeft")
+		}
+	}
+	else if ( ax > 1 ) {
+		if ( dir != 1 ) {
+			dir = 1;
+			wsend("ctlDirRight")
+		}
+	}
+	else {
+		if (dir != 0) {
+			dir = 0;
+			wsend("ctlDirNone");
+		}
+	}
+	// debug("x:" + ax.toString().substr(0,4) + ",y:" + ay.toString().substr(0,4) 
+	// 				+ ",z:" + az.toString().substr(0,4) );
+}
 
 function shieldDefault( e ) {
 	e.preventDefault();
@@ -254,11 +269,11 @@ function touchCancel(e) {
 
 
 function debug(str) {
-    var $debug = $("#debug");
+    var $debugList = $("#debug_list");
     var nowDate = new Date;
     var formatDate = "[" + nowDate.getHours() + ":"
     	+ nowDate.getMinutes() + ":" + nowDate.getSeconds() + "]";
-    $debug.prepend("<li>" + formatDate + "\t" + str +"</li>");
+    $debugList.prepend("<li>" + formatDate + "\t" + str +"</li>");
 }
 
 function sendMsg(msg) {
@@ -269,15 +284,27 @@ function sendMsg(msg) {
 var debugDisplaying = 0;
 function toggleDebug () {
 	if ( debugDisplaying ) {
-		$("#debug").hide(200);
+		$("#debug_div").hide(200);
 		debugDisplaying = 0;
 	}
 	else {
-		$("#debug").show(200)
+		$("#debug_div").show(200)
 		debugDisplaying = 1;
 	}
 }
 
+
+var chatDisplaying = 0;
+function toggleChat () {
+	if ( chatDisplaying ) {
+		$("#chat_div").hide(200);
+		chatDisplaying = 0;
+	}
+	else {
+		$("#chat_div").show(200)
+		chatDisplaying = 1;
+	}
+}
 
 
 

@@ -1,6 +1,8 @@
+var ws = null;
+var ctrlId = "0"
 
 
-function init() {
+$(function() {
     
 
     ws = new WebSocket("ws://huihui:3102/");
@@ -23,14 +25,16 @@ function init() {
 	
 	
 	
-};
+});
 
 
 
 
 function wsend( msg ) {
-	ws.send( ctrlId + msg)
-	debug("ws send:" + ctrlId + msg )
+
+	ws.send( ctrlId + msg);
+	debug("ws send:" + ctrlId + msg )	
+	
 }
 
 

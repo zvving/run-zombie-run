@@ -19,7 +19,7 @@
 		<script src="js/controller/controller.js" type="text/javascript"></script>
 		
     </head>
-    <body onload="init();">
+    <body>
         <div id="vertical_centering_div">
             <!-- this container div is required in XHTML Trans documents or the table won't center vertically. -->
             <table id="centering_table">
@@ -28,31 +28,39 @@
                     <tr>
                         <td>
                             <div id="content_top">
-                                <ul id="debug" style="display:none;"></ul>
+								<div id="chat_div" style="display:none;">
+									<ul id= "chat_list">
+									</ul>
+									<input type="text" id="chat_input" value="tst中国"/>
+									<span id="chat_btn">Send</span>
+								</div>
+								<div id="debug_div" style="display:none;">
+									<ul id="debug_list"></ul>
+								</div>
                             </div>
                             <div id="content_div">
                                 <!-- This div will hold all your centered content -->
                                 <div id="dir_bar">
-                                    <div id="up_btn" class="up_btn">
-                                        加速
+                                    <div id="up_btn" class="up_btn radius_btn">
+                                        ↑
                                     </div>
  
-                                    <div id="down_btn" class="down_btn">
-                                        减速
+                                    <div id="down_btn" class="down_btn radius_btn">
+                                        ↓
                                     </div>
                                 </div>
                                 <div id="abc_bar">
-                                    <div id="x_btn" onclick="debug("fdsf");" class="x_btn">
-                                        x
+                                    <div id="x_btn" class="x_btn radius_btn">
+                                        X
                                     </div>
-                                    <div id="y_btn" class="y_btn">
-                                        y
+                                    <div id="y_btn" class="y_btn radius_btn">
+                                        Y
                                     </div>
-                                    <div id="a_btn" class="a_btn">
-                                        a
+                                    <div id="a_btn" class="a_btn radius_btn">
+                                        A
                                     </div>
-                                    <div id="b_btn" class="b_btn">
-                                        b
+                                    <div id="b_btn" class="b_btn radius_btn">
+                                        B
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +72,9 @@
 								<span id="f4_btn" class="f_btn">Clear</span>
 								<span id="f5_btn" class="f_btn">Debug</span>
 								<span id="f6_btn" class="f_btn">f6</span>
-                                <span id="debug_btn" class="f_btn">local info</span>
+								<span id="chat_display_btn" class="f_btn">Chat</span>
+                                <span id="debug_btn" class="f_btn">Info</span>
+								
                             </div>
                         </td>
                     </tr>
