@@ -154,9 +154,20 @@ span.f_btn:active{
 #chat_list {
 	width: auto;
 	height: 200px;
-	background-color: silver;
+	background-color: white;
 	margin-bottom: 7px;
 }
+
+#chat_list li {
+	border-bottom: 1px dashed green;
+	text-align: left;
+	margin: 2px 2px;
+}
+#chat_list li span {
+	color: green;
+	font-weight: bolder;
+}
+
 
 #chat_input{
 	float: left;

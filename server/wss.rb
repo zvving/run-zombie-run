@@ -3,17 +3,20 @@ require 'eventmachine'
 require 'em-websocket'
 # settings
 
+hostIp = "192.168.1.131"
 
 puts "try start EM..."
 EM.run do
   @channel_v = EM::Channel.new
+  @channel_chat = EM::Channel.new
 
   
   puts "try start view web socket server..."
   EventMachine::WebSocket.start(
-    :host => "huihui", :port => 3101, :debug => true) do |ws|
+    :host => hostIp, :port => 3101, :debug => true) do |ws|
     
-    sid = nil
+    v_sid = nil
+    chat_sid = nil
     
     ws.onopen {
       
@@ -22,7 +25,8 @@ EM.run do
         case msg
         when "sysSubViewer"
           # 验证成功,交换信息
-          sid = @channel_v.subscribe { |msg| ws.send msg }
+          v_sid = @channel_v.subscribe { |msg| ws.send msg }
+          chat_sid = @channel_chat.subscribe { |msg| ws.send msg }
         else
           @channel_v.push msg
         end
@@ -30,8 +34,9 @@ EM.run do
       }
 
       ws.onclose {
-        @channel_v.unsubscribe(sid) if sid != nil
-        puts "v WebSocket closed:#{sid}"
+        @channel_v.unsubscribe(v_sid) if v_sid != nil
+        @channel_chat.unsubscribe(chat_sid) if chat_sid != nil
+        puts "v WebSocket closed:#{v_sid}"
       }
       
       ws.onerror { |e|
@@ -44,9 +49,9 @@ EM.run do
   
   puts "try start controller web socket server..."
   EventMachine::WebSocket.start(
-    :host => "huihui", :port => 3102, :debug => true) do |ws|
+    :host => hostIp, :port => 3102, :debug => true) do |ws|
     
-    sid = nil
+    chat_sid = nil
     
     ws.onopen {
       
@@ -54,16 +59,25 @@ EM.run do
 
         case msg
         when "sysSubController"
-          @selfChannel = @channel_v;
+          @selfChannel_v = @channel_v
+          @selfChannel_chat = @channel_chat
+          chat_sid = @channel_chat.subscribe { |msg| ws.send msg }
         else
-          @selfChannel.push msg if @selfChannel != nil
+          case msg[1,3]
+          when "msg"
+            @selfChannel_chat.push msg if @selfChannel_chat != nil
+          else
+            @selfChannel_v.push msg if @selfChannel_v != nil
+          end
         end
         puts "c receive: #{msg}"
       }
 
       ws.onclose {
-        @channel_v.unsubscribe(sid) if sid != nil
-        puts "c WebSocket closed:#{sid}"
+        @selfChannel_v = nil
+        @selfChannel_chat = nil
+        @channel_chat.unsubscribe(chat_sid) if chat_sid != nil
+        puts "c WebSocket closed:#{chat_sid}"
       }
       
       ws.onerror { |e|

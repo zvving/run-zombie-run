@@ -17,12 +17,15 @@ $(function() {
 
 function handleWsMsg( msg ) {
 	var msgS = new MsgStruct( msg )
-	
+	log.log("zzzzz")
 	switch(msgS.kind) {
 		case "sys":
 			break;
 		case "ctl":
 			handleCtlMsg(msgS)
+			break;
+		case "msg":
+			handleMsgMsg(msgS)
 			break;
 		default:
 			alert("unkonw msg kind!");

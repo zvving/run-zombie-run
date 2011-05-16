@@ -188,6 +188,7 @@ var GlobalManager = Class.extend({
     ohDie: function() {
         log.log("die");
         this.player.isLive = false;
+		this.player.hideChat();
         audioDie.load();
         audioDie.play();
     },

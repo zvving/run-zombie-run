@@ -11,6 +11,7 @@ var Player = Role.extend({
 		this.dirStateK	= DIR_STATE_PLAYER_K;
 		this.a	= 0;
 		this.aState	= SPEED_KEEP;
+		this.timeout = -1;
 		
     },
 	eventLoop: function( time ) {
@@ -24,8 +25,26 @@ var Player = Role.extend({
 		}
 		
 		this._super(time);
+		
+		//更新 bub
+		$user1.css("top", this.y - 60)
+		$user1.css("left", this.x - 22)
 	},
-
+	showChat: function ( msg ) {
+		if (this.isLive == false) {
+			return;
+		}
+		clearTimeout(this.timeout)
+		this.timeout = setTimeout("gm.player.hideChat()",5000);
+		$user1.text(msg)
+		$user1.show(500);
+		audioPu.load();
+        audioPu.play();
+	},
+	hideChat: function() {
+		$user1.hide(1000);
+		$user1.text("")
+	},
 	drawLoop: function () {
 		cx.strokeStyle = HSLA_PLAYER_STROKE;
 		cx.fillStyle = HSLA_PLAYER_FILL;

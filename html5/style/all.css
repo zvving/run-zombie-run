@@ -4,6 +4,12 @@ body {
 #canvas_div {
 	margin: auto;
 	width: 960px;
+	height: 650px;
+	text-align: left;
+}
+
+#f_canvas {
+	position: absolute;
 }
 
 #info_bar {
@@ -24,6 +30,52 @@ body {
 	text-align: center;
 	height: 40px;
 }
+
+.chat_bub {
+	font-size: 10px;
+	font-weight: bolder;
+  position:relative;
+  padding:5px 15px;
+  border:3px solid #5a8f00;
+  color:#333;
+  background:#fff;
+  /* css3 */
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+/* creates part of the curve */
+.chat_bub:before {
+  content:"";
+  position:absolute;
+  bottom:-10px; /* value = - border-top-width - border-bottom-width */
+  left:10px; /* controls horizontal position */
+  border-width:10px 10px 0;
+  border-style:solid;
+  border-color:#5a8f00 transparent;
+  /* reduce the damage in FF3.0 */
+  display:block; 
+  width:0;
+
+}
+
+/* creates part of the curved pointy bit */
+.chat_bub:after {
+  content:"";
+  position:absolute;
+  bottom:-5px; /* value = - border-top-width - border-bottom-width */
+  left:13px; /* value = (:before left) + (:before border-left) - (:after border-left) */
+  border-width:7px 7px 0;
+  border-style:solid;
+  border-color:#fff transparent;
+  /* reduce the damage in FF3.0 */
+  display:block; 
+  width:0;
+
+}
+
+
 
 
 

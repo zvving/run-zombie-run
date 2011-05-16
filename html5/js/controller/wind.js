@@ -7,7 +7,17 @@ $(function() {
 
     ws = new WebSocket("ws://huihui:3102/");
     ws.onmessage = function(evt) {
-        debug("Message: " + evt.data);
+		var msgS = new MsgStruct( evt.data );
+		switch(msgS.kind) {
+			case "sys":
+				break;
+			case "msg":
+				handleMsgMsg(msgS)
+				break;
+			default:
+				alert("unkonw msg kind!");
+				break;
+		}
     };
     ws.onclose = function() {
         debug("socket closed");
@@ -15,6 +25,7 @@ $(function() {
     ws.onopen = function() {
         debug("connected...");
         ws.send("sysSubController");
+		chatSend("Hello, everyone~");
     };
 
 

@@ -27,6 +27,7 @@ var az = 0;
 
 var dir = 0;
 
+var chat_user = "WallE"
 
 
 
@@ -36,7 +37,7 @@ $(function() {
 		var msg = $("#chat_input").val();
 		if ( msg != "") {
 			$("#chat_input").val("")
-			wsend("msg" + msg)
+			chatSend( msg );
 		}
 	}, false)
 	
@@ -170,6 +171,12 @@ $(function() {
 			setInterval(dirStatusUpadte, 10);
 		},1000);
 	}
+	
+	
+	
+	
+	toggleChat();
+	toggleDebug();
 });
 
 
@@ -294,6 +301,7 @@ function toggleDebug () {
 }
 
 
+
 var chatDisplaying = 0;
 function toggleChat () {
 	if ( chatDisplaying ) {
@@ -306,7 +314,10 @@ function toggleChat () {
 	}
 }
 
-
+function IHandleMsgMsg ( userName, chatContent) {
+	$("#chat_list").append("<li><span class='chat_user'>" 
+		+ userName + ":</span>" + chatContent +"</li>");
+}
 
 
 

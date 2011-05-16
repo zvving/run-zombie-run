@@ -10,6 +10,8 @@ var audioRestart;
 var audioDie;
 var audioPu;
 
+var $user1;
+
 
 $(function() {
 	var fCanvas = document.getElementById("f_canvas");
@@ -25,6 +27,8 @@ $(function() {
 	audioDie = document.getElementById("audio_die");
 	audioPu = document.getElementById("audio_pu");
 	
+	$user1 = $("#user1")
+	
 	cx = fCanvas.getContext("2d");
 	
 	gm.start();
@@ -33,3 +37,8 @@ $(function() {
 		gm.addZombie();
 	}
 });
+
+
+function IHandleMsgMsg ( userName, chatContent) {
+	gm.player.showChat( chatContent )
+}
