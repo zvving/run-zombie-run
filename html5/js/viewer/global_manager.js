@@ -56,7 +56,7 @@ var GlobalManager = Class.extend({
 			}
         }
 
-				/** 计算临近僵尸和近距离僵尸 */
+		/** 计算临近僵尸和近距离僵尸 */
         for (i = 0; i < this.zombieList.length; i++) {
             for (j = i + 1; j < this.zombieList.length; j++) {
                 tmp_manager_distance = distance(this.zombieList[i], this.zombieList[j])
