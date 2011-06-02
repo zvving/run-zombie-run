@@ -4,8 +4,8 @@ var ctrlId = "0"
 
 $(function() {
     
-
-    ws = new WebSocket("ws://huihui:3102/");
+	var hostIp = location.host
+	ws = new WebSocket("ws://" + hostIp + ":3102/");
     ws.onmessage = function(evt) {
 		var msgS = new MsgStruct( evt.data );
 		switch(msgS.kind) {

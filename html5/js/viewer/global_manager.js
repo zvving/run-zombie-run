@@ -4,7 +4,7 @@ var GlobalManager = Class.extend({
     // init是构造函数
     init: function() {
         this.zombieList = new Array();
-        this.player = new Player();
+        this.fPlayer = new Player();
         log.log("=== GlobalManager init...");
         this.inGame = true;
         this.isDebug = false;
@@ -51,7 +51,7 @@ var GlobalManager = Class.extend({
             this.zombieList[i].nearZombie	= null;
 			this.zombieList[i].aim			= null;
 			
-			if ( this.player.isLive ) {
+			if ( this.fPlayer.isLive ) {
 				this.playerWithZombie( this.zombieList[i] );
 			}
         }
@@ -74,8 +74,8 @@ var GlobalManager = Class.extend({
         }
 
         //处理 player event loop
-        if (this.player.isLive == true) {
-            this.player.eventLoop(lostTime);
+        if (this.fPlayer.isLive == true) {
+            this.fPlayer.eventLoop(lostTime);
         }
 
         // TODO 优化多次使用的计算参数
@@ -88,11 +88,11 @@ var GlobalManager = Class.extend({
 
 	playerWithZombie: function( zombie ){
 		
-		var theDist = distance(this.player, zombie);
+		var theDist = distance(this.fPlayer, zombie);
 		
 		if ( theDist < EYESHOT_RANGE ) {
 			//TODO 判断 eyeshot angle
-			zombie.findingAim( this.player );
+			zombie.findingAim( this.fPlayer );
 		}
 		
 		
@@ -173,8 +173,8 @@ var GlobalManager = Class.extend({
 
         //
         //绘制 player
-        if (this.player.isLive == true) {
-            this.player.drawLoop();
+        if (this.fPlayer.isLive == true) {
+            this.fPlayer.drawLoop();
         }
 
         cx.restore();
@@ -187,13 +187,13 @@ var GlobalManager = Class.extend({
 
     ohDie: function() {
         log.log("die");
-        this.player.isLive = false;
-		this.player.hideChat();
+        this.fPlayer.isLive = false;
+		this.fPlayer.hideChat();
         audioDie.load();
         audioDie.play();
     },
     restart: function() {
-        this.player.isLive = true;
+        this.fPlayer.isLive = true;
         audioRestart.load();
         audioRestart.play();
     },
@@ -222,6 +222,7 @@ var GlobalManager = Class.extend({
     
     /** debug 开关 */
     toggleDebug: function() {
+    		$("#info_bar").toggle(1000);
         this.isDebug = this.isDebug ? false : true;
         audioPu.load();
         audioPu.play();

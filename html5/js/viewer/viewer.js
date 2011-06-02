@@ -40,5 +40,71 @@ $(function() {
 
 
 function IHandleMsgMsg ( userName, chatContent) {
-	gm.player.showChat( chatContent )
+	gm.fPlayer.showChat( chatContent )
+}
+
+document.onkeydown = function( event ) {
+	
+	switch ( event.keyCode ) {
+		case 37://left
+			gm.fPlayer.dirState = DIR_STATE_LEFT;
+			break;
+		case 38://up
+			gm.fPlayer.aState	= SPEED_UP;
+			break;
+		case 39://right
+			gm.fPlayer.dirState = DIR_STATE_RIGHT;
+			break;
+		case 40://down
+			gm.fPlayer.aState	= SPEED_DOWN;
+			break;
+		default:
+			break;
+	}
+
+}
+
+document.onkeyup = function( event ) {
+	
+	switch ( event.keyCode ) {
+		case 37://left
+			if (gm.fPlayer.dirState == DIR_STATE_LEFT) {
+				gm.fPlayer.dirState = DIR_STATE_NONE;
+			}
+			break;
+		case 38://up
+			if (gm.fPlayer.aState == SPEED_UP) {
+				gm.fPlayer.aState = SPEED_KEEP;
+			}
+			break;
+		case 39://right
+			if (gm.fPlayer.dirState == DIR_STATE_RIGHT) {
+				gm.fPlayer.dirState = DIR_STATE_NONE;
+			}
+			break;
+		case 40://down
+			if (gm.fPlayer.aState == SPEED_DOWN) {
+				gm.fPlayer.aState = SPEED_KEEP;
+			}
+			break;
+		//control
+		case 65://a
+			gm.addZombie();
+			break;
+		case 67://c
+			gm.clearZombie();
+			break;
+		case 68://d
+			gm.toggleDebug();
+			break;
+		case 80://p
+			gm.pause();
+			break;
+		case 82://r
+			gm.restart();
+			break;
+		default:
+			break;
+	}
+
 }

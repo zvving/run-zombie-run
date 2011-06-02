@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>fly... fly...</title>
 	
-	<link href="style/all.css" rel="stylesheet" type="text/css"/>
+	<link href="style/css/fly.css" rel="stylesheet" type="text/css"/>
 	
 	<script src="js/lib/jquery-1.6.js" type="text/javascript"></script>
     
@@ -35,20 +35,36 @@
 </head>
 
 <body>
-
-	<div id="info_bar">
-		FPS:<span id="fps"></span>
-		FTime:<span id="fps_time"></span>
-		CPS:<span id="cps"></span>
-		CTime:<span id="cps_time"></span>
-		list:<span id="zombie_list_number"></span>
+	<div id="player_info_bar">
+		<div id="f_player_bar" class="player_bar">
+			<div class="player_head">
+			</div>
+			<div class="life_div">
+				<div id="f_player_life">
+				</div>
+			</div>
+			<div class="player_score score">0
+			</div>
+		</div>
+		<div id="centre_div">
+			<div id="centre_bar">
+				High Score: <span id="high_score" class="score">9990</span>
+			</div>
+		</div>
+		<div id="w_player_bar" class="player_bar">
+			<div class="player_score score">9999
+			</div>
+			<div class="life_div">
+				<div id="w_player_life"></div>
+			</div>
+			<div class="player_head">
+			</div>
+		</div>
 	</div>
-
-	<hr/>
 	
 	<div id="canvas_div">
 		
-		<canvas id="f_canvas" width="960" height="640" style="border: 1px solid black;"></canvas>
+		<canvas id="f_canvas" width="958" height="640" style="border: 1px solid black;"></canvas>
 		<span id="user1" class="chat_bub" style="display: none;"></span>
 	</div>
 	
@@ -71,6 +87,14 @@
 		</div>
 	</div>
 	<hr/>
+	<div id="info_bar" style="display:none;">
+		FPS:<span id="fps"></span>
+		FTime:<span id="fps_time"></span>
+		CPS:<span id="cps"></span>
+		CTime:<span id="cps_time"></span>
+		list:<span id="zombie_list_number"></span>
+		<hr/>
+	</div>
 	开源作品，项目托管在 <a href="https://github.com/merlyle/run-zombie-run" rel="github">GitHub</a> ，作者邮箱 <a href="mailto://merlyle@gmail.com">merlyle@gmail.com</a>
 </body>
 

@@ -2,7 +2,8 @@ var ws;
 
 
 $(function() {
-	ws = new WebSocket("ws://huihui:3101/");
+	var hostIp = location.host
+	ws = new WebSocket("ws://" + hostIp + ":3101/");
     ws.onmessage = function(evt) {
 		handleWsMsg( evt.data )
     };
@@ -10,16 +11,15 @@ $(function() {
         log.log("socket closed");
     };
     ws.onopen = function() {
-        log.log("connected...");
-        ws.send("sysSubViewer");
+        log.log("ws onopen...");
     };
 });
 
 function handleWsMsg( msg ) {
 	var msgS = new MsgStruct( msg )
-	log.log("zzzzz")
 	switch(msgS.kind) {
-		case "sys":
+		case "lik":
+			handleLikMsg(msgS)
 			break;
 		case "ctl":
 			handleCtlMsg(msgS)
@@ -34,6 +34,17 @@ function handleWsMsg( msg ) {
 	
 	log.log("handle-id:"+ msgS.id + "|kind:" + msgS.kind 
 		+ "|content:" + msgS.content)
+}
+
+function handleLikMsg( msgS ) {
+	switch(msgS.content) {
+		case "ConnectOk":
+			tryFlyInit()
+			break;
+		default:
+			alert("unkonw msg kind!");
+			break;
+	}
 }
 
 function handleCtlMsg( msgS ) {
@@ -88,4 +99,9 @@ function handleCtlMsg( msgS ) {
 		break;
 
 	}
+}
+
+
+function tryFlyInit() {
+	ws.send("zlikFlyInit");
 }

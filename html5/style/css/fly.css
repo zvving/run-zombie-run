@@ -1,6 +1,90 @@
 body {
 	text-align: center;
 }
+
+
+#player_info_bar {
+	margin: auto;
+	width: 960px;
+	height: 50px;
+}
+
+.player_bar {
+	width: 300px;
+	height: 50px;
+}
+
+#f_player_bar {
+	float: left;
+}
+
+#centre_div {
+	position: absolute;
+	width: 960px;
+	height: 50px;
+}
+
+#centre_bar {
+	width: 200px;
+	height: 50px;
+	line-height: 50px;
+	margin: auto;
+}
+
+.score {
+	font-size: 1.2em;
+	font-weight: bolder;
+	color: red;
+}
+
+
+
+#w_player_bar {
+	float: right;
+}
+
+.player_head {
+	float: left;
+	border: 1px solid black;
+	width: 48px;
+	height: 48px;
+	box-shadow:0 -3px 10px red;
+}
+
+.life_div {
+	float: left;
+	width: 150px;
+	height: 50px;
+}
+
+.player_score {
+	float: left;
+	width: 92px;
+	height: 42px;
+	border: 4px dashed red;	
+	background-color: black;
+	line-height: 50px;
+}
+
+#f_player_life {
+	float: left;
+	background: url("../images/player_heart.png");
+	height: 50px;
+	width: 150px;
+}
+
+#w_player_life {
+	float: right;
+	background: url("../images/player_heart.png");
+	height: 50px;
+	width: 100px;
+}
+
+
+
+
+
+
 #canvas_div {
 	margin: auto;
 	width: 960px;
