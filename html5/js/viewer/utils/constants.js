@@ -24,6 +24,9 @@ const EYESHOT_ANGLE		= Math.PI / 3;
 const EYESHOT_RANGE		= 200;
 const NEAR_RANGE		= 40;
 
+const FIRE_ANGLE		= Math.PI / 4;
+const FIRE_RANGE		= 250;
+
 const DIR_STATE_ZOMBIE_K	= 150;
 const DIR_STATE_PLAYER_K	= 500;
 const DIR_STATE_K_CENTER	= 1;

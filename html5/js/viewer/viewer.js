@@ -58,6 +58,8 @@ document.onkeydown = function( event ) {
 		case 40://down
 			gm.fPlayer.aState	= SPEED_DOWN;
 			break;
+		case 32:
+			gm.fPlayer.onFire();
 		default:
 			break;
 	}

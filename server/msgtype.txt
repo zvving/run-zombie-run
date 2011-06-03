@@ -1,0 +1,24 @@
+flying zombie=================================
+likConnectOk    连接成功，收到此消息后发送zlikFlyInit
+
+
+
+
+FlyInit	Flying zombie 客户端初始化	持有 flying zombie client web socket 连接；
+订阅 chat channel
+WindInit	Wind 客户端初始化	持有 wind zombie client web socket 连接；
+订阅 chat channel
+
+
+
+
+
+
+zelda=============================================
+zlikFlyInit 初始化动作
+
+
+
+
+
+

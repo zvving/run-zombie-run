@@ -4,7 +4,7 @@ var GlobalManager = Class.extend({
     // init是构造函数
     init: function() {
         this.zombieList = new Array();
-        this.fPlayer = new Player();
+        this.fPlayer = new Player(0,"f");
         log.log("=== GlobalManager init...");
         this.inGame = true;
         this.isDebug = false;
@@ -52,7 +52,7 @@ var GlobalManager = Class.extend({
 			this.zombieList[i].aim			= null;
 			
 			if ( this.fPlayer.isLive ) {
-				this.playerWithZombie( this.zombieList[i] );
+				this.playerWithZombie( this.zombieList[i], this.fPlayer );
 			}
         }
 
@@ -86,21 +86,24 @@ var GlobalManager = Class.extend({
 
     },
 
-	playerWithZombie: function( zombie ){
+	playerWithZombie: function( zombieList, player ){
 		
-		var theDist = distance(this.fPlayer, zombie);
+		var theDist = distance(player, zombieList);
 		
 		if ( theDist < EYESHOT_RANGE ) {
 			//TODO 判断 eyeshot angle
-			zombie.findingAim( this.fPlayer );
+			zombieList.findingAim( player );
 		}
 		
 		
 		//如果这个僵尸碰到 zombie, player 就挂掉啦
-		if ( theDist 
-			< RADIUS_ZOMBIE + RADIUS_PLAYER ) {
-				this.ohDie();
+		if ( player.superMan == false ) {
+			if ( theDist 
+				< RADIUS_ZOMBIE + RADIUS_PLAYER ) {
+				player.ohDie();
+			}
 		}
+		
 	},
 
     drawLoop: function() {
@@ -184,14 +187,6 @@ var GlobalManager = Class.extend({
         log.log("=== game end...");
         window.clearInterval(this.intervalId);
     },
-
-    ohDie: function() {
-        log.log("die");
-        this.fPlayer.isLive = false;
-		this.fPlayer.hideChat();
-        audioDie.load();
-        audioDie.play();
-    },
     restart: function() {
         this.fPlayer.isLive = true;
         audioRestart.load();
@@ -204,7 +199,7 @@ var GlobalManager = Class.extend({
     },
     addZombie: function() {
 
-        var z = new Zombie(2);
+        var z = new Zombie(this.zombieList.length);
         z.dir = Math.round(Math.random() * Math.PI * 2 * 10000);
         this.zombieList[this.zombieList.length] = z;
         infoZombieList.innerText = this.zombieList.length;

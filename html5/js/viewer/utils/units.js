@@ -47,6 +47,10 @@ var Point = Class.extend({
 		}
 });
 
+var removeDom = function (domId) {
+	$("#domId").remove();
+}
+
 var tmp_unit_zx;
 var tmp_unit_zy;
 var tmp_unit_zt;

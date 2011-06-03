@@ -17,15 +17,17 @@ var Zombie = Role.extend({
 		this.emotion		= EMO_SEARCH;
 		this.aim			= null;
 		
-    },
-    getY: function() {
-        return this.y;
+		this.isNowAttacked	= false;
     },
 	eventLoop: function( time ) {
 		
 		this.boids();
 		
 		this._super(time);
+		
+		if ( this.isNowAttacked == true) {
+			this.moveFire();
+		}
 	},
 	/** 柏兹理论 */
 	boids: function() {
@@ -132,8 +134,26 @@ var Zombie = Role.extend({
 	findingAim: function ( player ) {
 		this.aim = player;
 		this.emotion = EMO_FOUND;
+	},
+	attacked: function ( player ) {
+		log.log(player.type + "|" + this.id)
+		this.isNowAttacked = true;
+		$("#dom_list").append("<li class='zombie_fire' id='zombie_fire_" + this.id + "'></li>")
+		this.moveFire();
+		$("#zombie_fire_" + this.id).show();
+		setTimeout( "attackedend(" + this.id + ")",5000);
+	},
+	moveFire: function() {
+		var $fireDom = $("#zombie_fire_" + this.id);
+		$fireDom.css("left", Math.round(this.x)-14);
+		$fireDom.css("top", Math.round(this.y)-55);
 	}
 });
+
+function attackedend( id ) {
+	gm.zombieList[id].isNowAttacked = false;
+	$("#zombie_fire_" + id ).remove();
+}
 
 
 

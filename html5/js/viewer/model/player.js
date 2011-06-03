@@ -2,8 +2,9 @@
 
 var Player = Role.extend({
     // init是构造函数
-    init: function(id) {
+    init: function(id, type) {
 		this._super(id);
+		this.type = type;
 		this.radius = RADIUS_PLAYER;
 		this.x = 200;
 		this.y = 200;
@@ -12,7 +13,9 @@ var Player = Role.extend({
 		this.a	= 0;
 		this.aState	= SPEED_KEEP;
 		this.timeout = -1;
-		
+		this.superMan = false;
+		this.fillSuper = 0;
+		this.fireNum = 0;
     },
 	eventLoop: function( time ) {
 		
@@ -25,10 +28,6 @@ var Player = Role.extend({
 		}
 		
 		this._super(time);
-		
-		//更新 bub
-		$user1.css("top", this.y - 60)
-		$user1.css("left", this.x - 22)
 	},
 	showChat: function ( msg ) {
 		if (this.isLive == false) {
@@ -46,25 +45,87 @@ var Player = Role.extend({
 		$user1.text("")
 	},
 	drawLoop: function () {
+		
+		if ( this.fireNum > 0) {
+			cx.beginPath();
+			cx.fillStyle = "hsla(60, 50%, 50%, " + this.fireNum/100 + ")";
+			this.fireNum -= 3;
+			cx.moveTo(this.x, this.y);
+			cx.arc(this.x, this.y, this.radius + EYESHOT_RANGE, this.dir/10000 + FIRE_ANGLE, this.dir/10000 - FIRE_ANGLE, true );
+			cx.fill();
+			cx.closePath();
+		}
+		
+		
 		cx.strokeStyle = HSLA_PLAYER_STROKE;
 		cx.fillStyle = HSLA_PLAYER_FILL;
+		
+		if (this.superMan == true) {
+			this.fillSuper = (this.fillSuper + 5)%50
+			cx.fillStyle = "hsla(180, 50%, 50%, " + this.fillSuper/100 + ")";
+		}
 		
 		cx.beginPath();
 		cx.arc(this.x, this.y,
 			 this.radius, this.dir/10000, this.dir/10000+Math.PI*2);
 		cx.lineTo(this.x, this.y);
 		cx.closePath();
-		
 		cx.fill();
 		cx.stroke();
+		
+	},
+	ohDie: function() {
+        log.log("die");
+        this.isLive = false;
+		this.hideChat();
+		var leaveLife = playerLifeDown(this.type);
+		if ( leaveLife == "0px") {
+			
+		}
+		else {
+			setTimeout("gm." + this.type + "Player.newLife()",2000);
+		}
+    },
+	ohOver: function() {
+		
+	},
+	newLife: function() {
+		this.isLive = true;
+		this.superMan = true;
+		setTimeout("gm." + this.type + "Player.superMan = false;",5000);
+	},
+	onFire: function() {
+		if (this.fireNum <= 0) {
+			this.fireNum = 80;
+			this.attackZombie();
+		}
+	},
+	attackZombie: function() {
+		for (i = 0; i < gm.zombieList.length; i++) {
+			tmp_manager_distance = distance(gm.zombieList[i], this)
+			if (tmp_manager_distance < FIRE_RANGE) {
+				gm.zombieList[i].attacked(this)
+			}
+        }
 	}
+	
 });
 
 const HSLA_PLAYER_STROKE	= "hsla(60, 50%, 50%, 1)";
 const HSLA_PLAYER_FILL		= "hsla(180, 50%, 50%, 0.4)";
+const HSLA_PLAYER_FIRE		= "hsla(60, 50%, 50%, 1)";
 
 const SPEED_UP				= 1;
 const SPEED_DOWN			= -1;
 const SPEED_KEEP			= 0;
 
+function playerLifeSet( type, num ) {
+	$("#" + type + "_player_life").css("width", (num*50) + "px");
+}
+
+function playerLifeDown( type ) {
+	var $playerLife = $("#" + type + "_player_life");
+	$playerLife.css("width", "-=50")
+	return $playerLife.css("width");
+}
 
