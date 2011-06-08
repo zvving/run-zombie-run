@@ -53,7 +53,7 @@ const EMO_FOUND		= 1;
 const EMO_FOLLOW	= 2;
 const EMO_ACCACK	= 3;
 
-const HSLA_EYESHOT			= "hsla(0, 50%, 90%, 0.2)";
+const HSLA_EYESHOT			= "hsla(0, 50%, 80%, 0.4)";
 const HSLA_ZOMBIE_STROKE	= "hsla(0, 50%, 50%, 1)";
 const HSLA_ZOMBIE_FILL		= "hsla(60, 90%, 50%, 1)";
 const HSLA_DEBUG_CENTER_POINT	= "hsla(240, 50%, 50%, 0.5)";
