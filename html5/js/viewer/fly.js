@@ -90,7 +90,7 @@ function handleCtlMsg( msgS ) {
 		case "Bend":
 		break;
 		case "F1":
-			$("#btn_add_zombie").trigger('click')
+			// $("#btn_add_zombie").trigger('click')
 			gm.pause()
 		break;
 		case "F2":
@@ -122,6 +122,7 @@ function tryFlyInit() {
 function windComeIn(){
 	$("#w_player_bar").show(3000);
 	gm.newWPlayer();
+	$("#w_player_score").html("0");
 }
 
 function windLeave(){
