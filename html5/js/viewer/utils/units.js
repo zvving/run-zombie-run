@@ -7,6 +7,15 @@ var distance = function ( z1, z2 ) {
 	return Math.sqrt( tmp_unit_zx*tmp_unit_zx + tmp_unit_zy*tmp_unit_zy );
 }
 
+var slopeRoles = function ( r1, r2 ) {
+	tmp_unit_zx = r2.x-r1.x;
+	tmp_unit_zy = r2.y-r1.y;
+	var at = Math.atan2(tmp_unit_zy,tmp_unit_zx);
+	var z = 3.1416 + at;
+	
+	return Math.round(z*10000);
+}
+
 /** 给定 role 方向,坐标 以及目标 point, 求转向方向, 顺时针 1, 逆时针 -1 */
 var dirTurnToPoint = function ( dir, x1, y1, x2, y2 ) {
 	//Flock Centering

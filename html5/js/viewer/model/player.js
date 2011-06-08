@@ -108,7 +108,14 @@ var Player = Role.extend({
 			}
 			tmp_manager_distance = distance(gm.zombieList[i], this)
 			if (tmp_manager_distance < FIRE_RANGE) {
-				gm.zombieList[i].attacked(this)
+				var slope = slopeRoles(gm.zombieList[i], this);
+				var ldir = (this.dir - FIRE_ANGLE*10000 + 62832)%62832;
+				var rdir = (this.dir + FIRE_ANGLE*10000 + 62832)%62832;
+				log.log("L:" + ldir + "R:" + rdir + "T:" +this.dir)
+				if  ( ( slope > ldir && slope < ldir + 2*FIRE_ANGLE*10000 ) 
+					|| ( slope > rdir - 2*FIRE_ANGLE*10000 && slope < rdir  ) ){
+					gm.zombieList[i].attacked(this)
+				}
 			}
         }
 	}
