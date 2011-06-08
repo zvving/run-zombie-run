@@ -81,7 +81,9 @@ var Player = Role.extend({
 		this.hideChat();
 		var leaveLife = playerLifeDown(this.type);
 		var l = Number(leaveLife.split("px")[0])
-		if ( l <= 0) {
+		if ( l <= 49 ) {
+			var $playerLife = $("#" + this.type + "_player_life");
+			$playerLife.css("width", "0")
 			this.ohOver();
 		}
 		else {
