@@ -86,6 +86,8 @@ var Player = Role.extend({
 		else {
 			setTimeout("gm." + this.type + "Player.newLife()",2000);
 		}
+		audioDie.load();
+        audioDie.play();
     },
 	ohOver: function() {
 		

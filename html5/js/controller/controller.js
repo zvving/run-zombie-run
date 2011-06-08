@@ -175,7 +175,7 @@ $(function() {
 	
 	
 	
-	toggleChat();
+	// toggleChat();
 	toggleDebug();
 });
 

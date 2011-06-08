@@ -49,6 +49,11 @@ body {
 	width: 48px;
 	height: 48px;
 	box-shadow:0 -3px 10px red;
+	background: url("../images/BJHTP.jpg");
+}
+
+#w_player_bar .player_head {
+	background: url("../images/ipad.png");
 }
 
 .life_div {
@@ -62,7 +67,6 @@ body {
 	width: 92px;
 	height: 42px;
 	border: 4px dashed red;	
-	background-color: black;
 	line-height: 50px;
 }
 
