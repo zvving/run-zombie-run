@@ -18,6 +18,7 @@ var Player = Role.extend({
 		this.fillSuper = 0;
 		this.fireNum = 0;
 		this.fill = id ? HSLA_WPLAYER_FILL:HSLA_FPLAYER_FILL;
+		this.life = 3;
     },
 	eventLoop: function( time ) {
 		
@@ -76,12 +77,13 @@ var Player = Role.extend({
 		
 	},
 	ohDie: function() {
+		this.life -= 1;
         log.log("die");
         this.isLive = false;
 		this.hideChat();
 		var leaveLife = playerLifeDown(this.type);
 		var l = Number(leaveLife.split("px")[0])
-		if ( l <= 49 ) {
+		if ( this.life <= 0 ) {
 			var $playerLife = $("#" + this.type + "_player_life");
 			$playerLife.css("width", "0")
 			this.ohOver();
@@ -89,11 +91,12 @@ var Player = Role.extend({
 		else {
 			setTimeout("gm." + this.type + "Player.newLife()",2000);
 		}
+		playerLifeSet(this.type,this.life);
 		audioDie.load();
         audioDie.play();
     },
 	ohOver: function() {
-		
+		 log.log("all die");
 	},
 	newLife: function() {
 		this.isLive = true;
