@@ -80,7 +80,8 @@ var Player = Role.extend({
         this.isLive = false;
 		this.hideChat();
 		var leaveLife = playerLifeDown(this.type);
-		if ( leaveLife == "0px") {
+		var l = Number(leaveLife.split("px")[0])
+		if ( l <= 0) {
 			this.ohOver();
 		}
 		else {
