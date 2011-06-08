@@ -22,7 +22,7 @@ const CPS_TIME			= 40;
 
 const EYESHOT_ANGLE		= Math.PI / 3;
 const EYESHOT_RANGE		= 200;
-const NEAR_RANGE		= 40;
+const NEAR_RANGE		= 60;
 
 const FIRE_ANGLE		= Math.PI / 4;
 const FIRE_RANGE		= 250;

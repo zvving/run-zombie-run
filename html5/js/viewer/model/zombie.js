@@ -29,7 +29,7 @@ var Zombie = Role.extend({
 		
 		if ( this.isNowAttacked == true) {
 			this.moveFire();
-			this.hp -= 100;
+			this.hp -= 8;
 			if (this.hp<=0) {
 				this.ohDie();
 			}
@@ -148,6 +148,7 @@ var Zombie = Role.extend({
 		this.moveFire();
 		$("#zombie_fire_" + this.id).show();
 		setTimeout( "attackedend(" + this.id + ")",5000);
+		this.attPlayer = player;
 	},
 	moveFire: function() {
 		var $fireDom = $("#zombie_fire_" + this.id);
@@ -157,6 +158,13 @@ var Zombie = Role.extend({
 	ohDie: function() {
 		$("#zombie_fire_" + this.id ).remove();
 		gm.oneZombieDie(this.id);
+		var $score = $("#" + this.attPlayer.type + "_player_score");
+		var s = Number($score.html()) + 10;
+		var t_s = Number($("#high_score").html());
+		if (s > t_s) {
+			$("#high_score").html(s)
+		}
+		$score.html(s)
 	},
 	findNeighborList: function() {
 		for (var z in gm.zombieList ) {

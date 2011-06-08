@@ -291,6 +291,9 @@ var GlobalManager = Class.extend({
 			}
 		}
         this.zombieList[idx].isLive = true;
+		this.zombieList[idx].hp = 1000;
+		this.zombieList[idx].x	= 480;
+		this.zombieList[idx].y	= 320;
 		zombieCount ++;
         infoZombieList.innerText = zombieCount;
         log.log("add a zombie..." + zombieCount);

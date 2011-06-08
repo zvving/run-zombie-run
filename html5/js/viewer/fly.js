@@ -55,6 +55,9 @@ function handleLikMsg( msgS ) {
 }
 
 function handleCtlMsg( msgS ) {
+	if (gm.wPlayer == null ) {
+		return;
+	}
 	
 	switch( msgS.content ) {
 		case "UpV":
