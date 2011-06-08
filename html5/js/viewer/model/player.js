@@ -140,7 +140,9 @@ function playerLifeSet( type, num ) {
 
 function playerLifeDown( type ) {
 	var $playerLife = $("#" + type + "_player_life");
-	$playerLife.css("width", "-=50")
+	var oldW = $playerLife.css("width")
+	var newW = Number(oldW.split("px")[0]) - 50;
+	$playerLife.css("width", newW + "px")
 	return $playerLife.css("width");
 }
 
