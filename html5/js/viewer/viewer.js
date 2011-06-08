@@ -103,7 +103,7 @@ document.onkeyup = function( event ) {
 			gm.pause();
 			break;
 		case 82://r
-			gm.restart();
+			gm.fRestart();
 			break;
 		default:
 			break;

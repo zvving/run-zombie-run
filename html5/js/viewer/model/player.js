@@ -8,6 +8,7 @@ var Player = Role.extend({
 		this.radius = RADIUS_PLAYER;
 		this.x = 200;
 		this.y = 200;
+		type == "w" ? this.x = 600 : null;
 		this.isLive = true;
 		this.dirStateK	= DIR_STATE_PLAYER_K;
 		this.a	= 0;
@@ -16,6 +17,7 @@ var Player = Role.extend({
 		this.superMan = false;
 		this.fillSuper = 0;
 		this.fireNum = 0;
+		this.fill = id ? HSLA_WPLAYER_FILL:HSLA_FPLAYER_FILL;
     },
 	eventLoop: function( time ) {
 		
@@ -56,13 +58,12 @@ var Player = Role.extend({
 			cx.closePath();
 		}
 		
-		
 		cx.strokeStyle = HSLA_PLAYER_STROKE;
-		cx.fillStyle = HSLA_PLAYER_FILL;
+		cx.fillStyle = this.fill;
 		
 		if (this.superMan == true) {
 			this.fillSuper = (this.fillSuper + 5)%50
-			cx.fillStyle = "hsla(180, 50%, 50%, " + this.fillSuper/100 + ")";
+			cx.fillStyle = "hsla(0, 50%, 50%, " + this.fillSuper/100 + ")";
 		}
 		
 		cx.beginPath();
@@ -80,7 +81,7 @@ var Player = Role.extend({
 		this.hideChat();
 		var leaveLife = playerLifeDown(this.type);
 		if ( leaveLife == "0px") {
-			
+			this.ohOver();
 		}
 		else {
 			setTimeout("gm." + this.type + "Player.newLife()",2000);
@@ -101,7 +102,10 @@ var Player = Role.extend({
 		}
 	},
 	attackZombie: function() {
-		for (i = 0; i < gm.zombieList.length; i++) {
+		for (var i in gm.zombieList ) {
+			if(gm.zombieList[i].isLive == false ) {
+				continue;
+			}
 			tmp_manager_distance = distance(gm.zombieList[i], this)
 			if (tmp_manager_distance < FIRE_RANGE) {
 				gm.zombieList[i].attacked(this)
@@ -111,8 +115,9 @@ var Player = Role.extend({
 	
 });
 
-const HSLA_PLAYER_STROKE	= "hsla(60, 50%, 50%, 1)";
-const HSLA_PLAYER_FILL		= "hsla(180, 50%, 50%, 0.4)";
+const HSLA_PLAYER_STROKE	= "hsla(60, 100%, 0%, 1)";
+const HSLA_FPLAYER_FILL		= "hsla(180, 50%, 50%, 0.4)";
+const HSLA_WPLAYER_FILL		= "hsla(240, 50%, 50%, 0.4)";
 const HSLA_PLAYER_FIRE		= "hsla(60, 50%, 50%, 1)";
 
 const SPEED_UP				= 1;

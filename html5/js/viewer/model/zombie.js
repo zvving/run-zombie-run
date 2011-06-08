@@ -7,6 +7,8 @@ var Zombie = Role.extend({
 		this.radius = RADIUS_ZOMBIE;
 		this.v		= SPEED_ZOMBIE_DEFAULT;
 		this.dirStateK	= DIR_STATE_ZOMBIE_K;
+		this.hp			= 1000;
+		this.isLive		= false;
 		
 		this.neighborList	= new Array();
 		this.centerPoint	= new Point();
@@ -27,6 +29,10 @@ var Zombie = Role.extend({
 		
 		if ( this.isNowAttacked == true) {
 			this.moveFire();
+			this.hp -= 100;
+			if (this.hp<=0) {
+				this.ohDie();
+			}
 		}
 	},
 	/** 柏兹理论 */
@@ -147,6 +153,24 @@ var Zombie = Role.extend({
 		var $fireDom = $("#zombie_fire_" + this.id);
 		$fireDom.css("left", Math.round(this.x)-14);
 		$fireDom.css("top", Math.round(this.y)-55);
+	},
+	ohDie: function() {
+		$("#zombie_fire_" + this.id ).remove();
+		gm.oneZombieDie(this.id);
+	},
+	findNeighborList: function() {
+		for (var z in gm.zombieList ) {
+            tmp_manager_distance = distance(this, gm.zombieList[z])
+            if (tmp_manager_distance < EYESHOT_RANGE) {
+                this.neighborList.push(gm.zombieList[z]);
+                if (tmp_manager_distance < NEAR_RANGE) {
+                    if (this.nearZombie == null || tmp_manager_distance < distance(gm.zombieList[z], this.nearZombie)) {
+                        this.nearZombie = gm.zombieList[z];
+                    }
+                }
+            }
+       
+        }
 	}
 });
 

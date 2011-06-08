@@ -169,7 +169,7 @@ $(function() {
 		
 		setTimeout( function() {
 			setInterval(dirStatusUpadte, 10);
-		},1000);
+		},1000);//why?
 	}
 	
 	

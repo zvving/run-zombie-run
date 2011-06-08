@@ -10,25 +10,25 @@ puts "try start EM on:[#{hostIp}]..."
 
 
 EM.run do
-  @channel_f = EM::Channel.new
+
   @channel_chat = EM::Channel.new
   
   
   # flying zombie web socket 服务器======================
   puts "try start view web socket server..."
   EventMachine::WebSocket.start(
-    :host => hostIp, :port => 3101, :debug => true) do |ws|
+    :host => hostIp, :port => 3101, :debug => false) do |ws|
     
     ws.onopen {
       
-      f_sid = nil
+      @fly = nil
       chat_sid = nil
       
       ws.onmessage { |msg|
         receiverKey = msg[0,1];
         receiverContent = msg[1..-1]
         
-        puts "f ws receive: #{receiverKey} + #{receiverContent}"
+        puts "fly ws receive: #{receiverKey} + #{receiverContent}"
         
         case receiverKey
         when "f"
@@ -37,22 +37,22 @@ EM.run do
           case receiverContent
           when "likFlyInit"
             # 验证成功,交换信息
-            f_sid = @channel_f.subscribe { |msg| ws.send msg }
+            @fly = ws
             chat_sid = @channel_chat.subscribe { |msg| ws.send msg }
             puts "===flying zombie inited."
           else
-            puts "===onmessage error:#{mgs}"
+            puts "===onmessage in z error:#{msg}"
           end
         else
-          @channel_f.push msg
+          puts "===onmessage all error:#{msg}"
         end
         
       }
 
       ws.onclose {
-        @channel_f.unsubscribe(f_sid) if f_sid != nil
+        @fly=nil
         @channel_chat.unsubscribe(chat_sid) if chat_sid != nil
-        puts "flying zombie WebSocket closed:#{f_sid}"
+        puts "flying zombie WebSocket closed!"
       }
       
       ws.onerror { |e|
@@ -70,42 +70,55 @@ EM.run do
   # wind web socket 服务器======================
   puts "try start controller web socket server..."
   EventMachine::WebSocket.start(
-    :host => hostIp, :port => 3102, :debug => true) do |ws|
-    
-    chat_sid = nil
+    :host => hostIp, :port => 3102, :debug => false) do |ws|
     
     ws.onopen {
       
+      @wind = nil
+      chat_sid = nil
+      
       ws.onmessage { |msg|
-
-        case msg
-        when "sysSubController"
-          @selfChannel_v = @channel_f
-          @selfChannel_chat = @channel_chat
-          chat_sid = @channel_chat.subscribe { |msg| ws.send msg }
-        else
-          case msg[1,3]
-          when "msg"
-            @selfChannel_chat.push msg if @selfChannel_chat != nil
+        receiverKey = msg[0,1];
+        receiverContent = msg[1..-1]
+        
+        puts "wind ws receive: #{receiverKey} + #{receiverContent}"
+        
+        case receiverKey
+        when "f"
+          @fly.send receiverContent if @fly!= nil
+        when "w"
+        when "z"
+          case receiverContent
+          when "likWidInit"
+            # 验证成功,交换信息
+            @wind = ws
+            chat_sid = @channel_chat.subscribe { |msg| ws.send msg }
+            puts "===wind inited."
+            @wind.send "likInited"
           else
-            @selfChannel_v.push msg if @selfChannel_v != nil
+            puts "===onmessage in z error:#{msg}"
           end
+        else
+          puts "===onmessage all error:#{msg}"
         end
-        puts "c receive: #{msg}"
+        
       }
 
       ws.onclose {
-        @selfChannel_v = nil
-        @selfChannel_chat = nil
+        @fly.send "likWindLeave" if @fly != nil
+        @wind=nil
         @channel_chat.unsubscribe(chat_sid) if chat_sid != nil
-        puts "c WebSocket closed:#{chat_sid}"
+        puts "wind WebSocket closed!"
       }
       
       ws.onerror { |e|
-        puts "c Error: #{e.message}"
+        puts "wind Error: #{e.message}"
       }
+      
+      
+      ws.send "likConnectOk"
     }
-
+    
   end
   puts "controller web socket server started."
   # wind web socket 服务器======================

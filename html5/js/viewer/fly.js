@@ -2,7 +2,8 @@ var ws;
 
 
 $(function() {
-	var hostIp = location.host
+	var host = location.host;
+	var hostIp = host.split(":")[0];
 	ws = new WebSocket("ws://" + hostIp + ":3101/");
     ws.onmessage = function(evt) {
 		handleWsMsg( evt.data )
@@ -39,7 +40,13 @@ function handleWsMsg( msg ) {
 function handleLikMsg( msgS ) {
 	switch(msgS.content) {
 		case "ConnectOk":
-			tryFlyInit()
+			tryFlyInit();
+			break;
+		case "IComeIn":
+			windComeIn();
+			break;
+		case "WindLeave":
+			windLeave();
 			break;
 		default:
 			alert("unkonw msg kind!");
@@ -51,37 +58,40 @@ function handleCtlMsg( msgS ) {
 	
 	switch( msgS.content ) {
 		case "UpV":
-			gm.player.aState	= SPEED_UP;
+			gm.wPlayer.aState	= SPEED_UP;
 		break;
 		case "KeepV":
-			gm.player.aState = SPEED_KEEP;
+			gm.wPlayer.aState = SPEED_KEEP;
 		break;
 		case "DownV":
-			gm.player.aState	= SPEED_DOWN;
+			gm.wPlayer.aState	= SPEED_DOWN;
 		break;
 		case "DirLeft":
-			gm.player.dirState = DIR_STATE_LEFT;
+			gm.wPlayer.dirState = DIR_STATE_LEFT;
 		break;
 		case "DirRight":
-			gm.player.dirState = DIR_STATE_RIGHT;
+			gm.wPlayer.dirState = DIR_STATE_RIGHT;
 		break;
 		case "DirNone":
-			gm.player.dirState = DIR_STATE_NONE;
+			gm.wPlayer.dirState = DIR_STATE_NONE;
 		break;
 		case "X":
-		break;
 		case "Y":
-		break;
 		case "A":
-		break;
 		case "B":
+			gm.wPlayer.onFire();
+		break;
+		case "Xend":
+		case "Yend":
+		case "Aend":
+		case "Bend":
 		break;
 		case "F1":
 			$("#btn_add_zombie").trigger('click')
 			gm.pause()
 		break;
 		case "F2":
-			gm.restart()
+			gm.wRestart()
 		break;
 		case "F3":
 			gm.addZombie()
@@ -95,7 +105,7 @@ function handleCtlMsg( msgS ) {
 		case "F6":
 		break;
 		default:
-			alert("unkonw msg contend! in ctl handle.");
+			alert("unkonw msg contend! in ctl handle:" + msgS);
 		break;
 
 	}
@@ -104,4 +114,14 @@ function handleCtlMsg( msgS ) {
 
 function tryFlyInit() {
 	ws.send("zlikFlyInit");
+}
+
+function windComeIn(){
+	$("#w_player_bar").show(3000);
+	gm.newWPlayer();
+}
+
+function windLeave(){
+	$("#w_player_bar").hide(1000);
+	gm.wPlayer = null;
 }

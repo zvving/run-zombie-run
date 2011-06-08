@@ -4,12 +4,14 @@ var ctrlId = "0"
 
 $(function() {
     
-	var hostIp = location.host
+	var host = location.host;
+	var hostIp = host.split(":")[0];
 	ws = new WebSocket("ws://" + hostIp + ":3102/");
     ws.onmessage = function(evt) {
 		var msgS = new MsgStruct( evt.data );
 		switch(msgS.kind) {
-			case "sys":
+			case "lik":
+				handleLikMsg(msgS)
 				break;
 			case "msg":
 				handleMsgMsg(msgS)
@@ -23,27 +25,34 @@ $(function() {
         debug("socket closed");
     };
     ws.onopen = function() {
-        debug("connected...");
-        ws.send("sysSubController");
-		chatSend("Hello, everyone~");
+        debug("ws open...");
+		//         ws.send("sysSubController");
+		// chatSend("Hello, everyone~");
     };
-
-
-	
-
-	
-	
-	
-	
 	
 });
+
+function handleLikMsg(msgS) {
+	switch(msgS.content) {
+		case "ConnectOk":
+			debug("connected!")
+			ws.send("zlikWidInit")
+			break;
+		case "Inited":
+			ws.send("flikIComeIn")
+			break;
+		default:
+			alert("unkonw msg :" + msgS);
+			break;
+	}
+}
 
 
 
 
 function wsend( msg ) {
 
-	ws.send( ctrlId + msg);
+	ws.send( "f" + msg);
 	debug("ws send:" + ctrlId + msg )	
 	
 }
