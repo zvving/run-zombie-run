@@ -2,7 +2,7 @@ require 'rubygems'
 require 'eventmachine'
 require 'em-websocket'
 
-require  'socket' 
+# require  'socket' 
 
 hostIp = IPSocket.getaddress(Socket.gethostname)
 
